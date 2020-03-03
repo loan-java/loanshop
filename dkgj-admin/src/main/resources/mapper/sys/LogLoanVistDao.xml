@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.dkgj.modules.sys.dao.LogLoanVistDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.dkgj.modules.sys.entity.LogLoanVistEntity" id="logLoanVistMap">
+        <result property="id" column="id"/>
+        <result property="loanId" column="loan_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="ip" column="ip"/>
+        <result property="channel" column="channel"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <select id="listExport" resultType="io.dkgj.modules.sys.entity.LogLoanVistEntity" parameterType="map">
+        SELECT t1.*,t2.title as loan_name,t3.mobile FROM log_loan_vist t1
+        LEFT JOIN loan t2 ON t1.loan_id = t2.id
+        LEFT JOIN USER t3 ON t1.user_id = t3.id
+        WHERE 1=1
+        <if test="mobile !='' and mobile != null">
+            AND t3.mobile LIKE CONCAT(CONCAT('%',#{mobile},'%'))
+        </if>
+        <if test="createDate !='' and createDate != null">
+            AND date_format(t1.create_time,'%Y/%m/%d') = #{createDate}
+        </if>
+        <if test="ip !=null and ip != ''">
+            AND t1.ip = #{ip}
+        </if>
+        <if test="loanName !=null and loanName != ''">
+            AND t2.title LIKE CONCAT(CONCAT('%',#{loanName},'%'))
+        </if>
+        <if test="cd !=null and cd != ''">
+            AND t1.channel LIKE CONCAT(CONCAT('%',#{cd},'%'))
+        </if>
+    </select>
+
+</mapper>

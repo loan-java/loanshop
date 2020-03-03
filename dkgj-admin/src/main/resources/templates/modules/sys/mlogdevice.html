@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+            <div class="form-group col-sm-4">
+                <label for="qid" class="col-sm-3 control-label">ID</label>
+                <div class="col-sm-9">
+                    <input type="text" id="qid" class="form-control" v-model="q.id" @keyup.enter="query"
+                           placeholder="ID">
+                </div>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="qappid" class="col-sm-3 control-label">应用ID</label>
+                <div class="col-sm-9">
+                    <select id="qappid" class="form-control" v-model="q.appid">
+                        <option value="">全部</option>
+                        <option v-for="option in options" v-bind:value="option.id">
+                            {{option.id}}-({{ option.title }})
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="quuid" class="col-sm-3 control-label">UUID</label>
+                <div class="col-sm-9">
+                    <input type="text" id="quuid" class="form-control" v-model="q.uuid" @keyup.enter="query"
+                           placeholder="UUID">
+                </div>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="qcreatedat" class="col-sm-3 control-label">创建时间</label>
+                <div class="col-sm-9">
+                    <input type="text" id="qcreatedAt" class="form-control" v-model="q.createdat"
+                           readonly
+                           @keyup.enter="query"
+                           placeholder="时间范围选择">
+                </div>
+            </div>
+            <br/><br/><br/>
+            <br/><br/>
+            <a class="btn btn-default" @click="query">查询</a>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="mLogDevice.appid" placeholder=""/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="mLogDevice.uuid" placeholder=""/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="mLogDevice.ua" placeholder=""/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="mLogDevice.createdat" placeholder=""/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="mLogDevice.deletedat" placeholder=""/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/mlogdevice.js?_${.now?long}"></script>
+</body>
+</html>

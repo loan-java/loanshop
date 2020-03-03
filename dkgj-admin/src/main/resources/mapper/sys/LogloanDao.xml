@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.dkgj.modules.sys.dao.LogloanDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.dkgj.modules.sys.entity.LogloanEntity" id="logloanMap">
+        <result property="id" column="id"/>
+        <result property="relid" column="relId"/>
+        <result property="refer" column="refer"/>
+        <result property="pv" column="pv"/>
+        <result property="uv" column="uv"/>
+        <result property="note" column="note"/>
+        <result property="createdat" column="createdAt"/>
+        <result property="updatedat" column="updatedAt"/>
+        <result property="deletedat" column="deletedAt"/>
+        <result property="type" column="type"/>
+        <result property="todayPv" column="today_pv"/>
+        <result property="todayUv" column="today_uv"/>
+    </resultMap>
+
+    <select id="selectLogloanlList" parameterType="java.util.HashMap"
+            resultType="io.dkgj.modules.sys.entity.LogloanEntity">
+        select t1.*, sum(uvt) as uvs,sum(today_uv) as todayUvSum,sum(today_pv) as todayPvSum
+        from logloan t1
+        left join (SELECT
+        COUNT(1) as uvt,
+        loanId
+        FROM(SELECT DISTINCT
+        deviceId,
+        mobile,
+        loanId,
+        channel,
+        ip
+        FROM
+        log_visit
+        where 1 = 1
+        <if test="id !=null and id != ''">
+            and loanId in (select relId from logloan WHERE id = #{id})
+        </if>
+        <if test="beginTime !=null and endTime != null">
+            and createDat between #{beginTime} and #{endTime}
+        </if>
+        <if test="relId !=null and relId != ''">
+            and loanId in (select id from loan WHERE title like CONCAT(CONCAT('%',#{relId},'%')))
+        </if>
+        GROUP BY loanId ) as tmp )as t2 on t2.loanId = t1.relId
+        where 1 = 1
+
+        <if test="id !=null and id != ''">
+            and t1.id = #{id}
+        </if>
+        <if test="relId !=null and relId != ''">
+            and t1.relId in (select id from loan WHERE title like CONCAT(CONCAT('%',#{relId},'%')))
+        </if>
+        <if test="refer !=null and refer != ''">
+            and t1.refer = #{refer}
+        </if>
+        <if test="beginTime !=null and endTime != null">
+            and t1.createdAt between #{beginTime} and #{endTime}
+        </if>
+
+        GROUP BY relId
+    </select>
+
+    <select id="selectSum" resultType="java.util.HashMap" parameterType="map">
+        select sum(pv) as pvNum, sum(uvt) as uvNum,sum(today_uv) as todayUvSum,sum(today_pv) as todayPvSum
+        from logloan t1
+        left join (SELECT
+        COUNT(1) as uvt,
+        loanId
+        FROM
+        (SELECT DISTINCT
+        deviceId,
+        mobile,
+        loanId,
+        channel,
+        ip
+        FROM
+        log_visit
+        where 1 = 1
+        <if test="beginTime !=null and endTime != null">
+            and createDat between #{beginTime} and #{endTime}
+        </if>
+        <if test="relId !=null and relId != ''">
+            and loanId in (select id from loan WHERE title like CONCAT(CONCAT('%',#{relId},'%')))
+        </if>
+        ) as tmp GROUP BY loanId ) as t2 on t2.loanId = t1.relId
+        where 1 = 1
+        <if test="id !=null and id != ''">
+            and t1.id = #{id}
+        </if>
+        <if test="relId !=null and relId != ''">
+            and t1.relId in (select id from loan WHERE title like CONCAT(CONCAT('%',#{relId},'%')))
+        </if>
+        <if test="refer !=null and refer != ''">
+            and t1.refer = #{refer}
+        </if>
+        <if test="beginTime !=null and endTime != null">
+            and t1.createdAt between #{beginTime} and #{endTime}
+        </if>
+    </select>
+
+</mapper>

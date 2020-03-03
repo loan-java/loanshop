@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+		<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+            <div class="form-group col-sm-4">
+                <label for="qid" class="col-sm-3 control-label">ID</label>
+                <div class="col-sm-9">
+                    <input type="text" id="qid" class="form-control" v-model="q.id" @keyup.enter="query"
+                           placeholder="ID">
+                </div>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="qchannelcode" class="col-sm-3 control-label">渠道代码</label>
+                <div class="col-sm-9">
+                    <input type="text" id="qchannelcode" class="form-control" v-model="q.channelcode" @keyup.enter="query"
+                           placeholder="渠道代码">
+                </div>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="qchannelname" class="col-sm-3 control-label">渠道名称</label>
+                <div class="col-sm-9">
+                    <input type="text" id="qchannelname" class="form-control" v-model="q.channelname" @keyup.enter="query"
+                           placeholder="渠道名称">
+                </div>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="qstate" class="col-sm-3 control-label">渠道状态</label>
+                <div class="col-sm-9">
+                    <select id="qstate" class="form-control" v-model="q.state">
+                        <option vlaue="">全部</option>
+                        <option vlaue="0">在线</option>
+                        <option vlaue="1">暂时下线</option>
+                    </select>
+                </div>
+            </div>
+            <br/><br/>
+            <br/><br/>
+            <br/>
+            <a class="btn btn-default" @click="query">查询</a>
+			<#if shiro.hasPermission("sys:channelmanage:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;添加渠道管理</a>
+			</#if>
+			<#if shiro.hasPermission("sys:channelmanage:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+			</#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-2 control-label">渠道代码</div>
+                <div class="col-sm-10" style="padding-left:14px;">
+                    <input v-if="edit" type="text" class="form-control" v-model="channelManage.channelcode" placeholder="渠道代码" readonly/>
+                    <input v-else type="text" class="form-control" v-model="channelManage.channelcode" placeholder="渠道代码"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">渠道名称</div>
+                <div class="col-sm-10" style="padding-left:14px;">
+                    <input type="text" class="form-control" v-model="channelManage.channelname" placeholder="渠道名称"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">状态</div>
+                <div class="col-sm-3">
+                    <select class="form-control"  v-model="channelManage.state">
+                        <option vlaue="0">在线</option>
+                        <option vlaue="1">暂时下线</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 control-label">是否扣量</div>
+                <div class="col-sm-3">
+                    <select class="form-control" @change="indexSelect" v-model="channelManage.deductstatus">
+                        <option value="0">不扣减</option>
+                        <option value="1">扣减</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" id="deduct-div" style="display:none;">
+                <div class="col-sm-2 control-label">扣减基数</div>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" v-model="channelManage.deductbase" placeholder="如：100"/>
+                </div>
+                <div class="col-sm-2 control-label">扣减比例</div>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" v-model="channelManage.deductratio" placeholder="如：0.15"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">备注</div>
+                <div class="col-sm-10" style="padding-left:14px;">
+                    <input type="text" class="form-control" v-model="channelManage.remark" placeholder="备注"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/channelmanage.js?_${.now?long}"></script>
+</body>
+</html>

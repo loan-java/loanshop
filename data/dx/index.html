@@ -1,0 +1,269 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+    <title>LDQ</title>
+    <style>
+        html, body, .mask, .container {
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        .mask {
+            position: absolute;
+            display: none;
+            top: 0; left: 0;
+            z-index: 999;
+            background-color: rgba(0, 0, 0, .5);
+            justify-content: flex-end;
+            align-items: flex-start;
+        }
+        .show {display: flex;}
+        .mask > p {
+            color: #CCC;
+            font-size: 3.2vw;
+            width: 70vw;
+        }
+        .mask img {
+            margin-right: 6vw;
+            width: 6vw;
+            height: 16vw;
+        }
+
+        .container {
+            position: relative;
+            background-image: url("img/bg.png");
+            background-size: 100vw 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        .container .logo {
+            width: 26.7vw;
+            height: 26.7vw;
+            margin-top: 15vh;
+            border-radius: 50%;
+        }
+        .mid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .title {
+            margin-top: 2.6vh;
+        }
+        .title .platform {
+            width: 4vw;
+            height: 4.8vw;
+        }
+        .title .app-name {
+            font-size: 4vw;
+            color: white;
+            margin: 0 1.2em;
+        }
+        .title .version {
+            height: 4vw;
+            line-height: 4vw;
+            font-size: 3vw;
+            color: #333;
+            background-color: rgb(227, 183, 116);
+            border-radius: 3px;
+        }
+        .download-btn {
+            margin-top: 7.4vh;
+            width: 53.3vw;
+            height: 12vw;
+            background-color: rgb(227, 183, 116);
+            color: white;
+            font-size: 5.3vw;
+            text-align: center;
+            line-height: 12vw;
+            border-radius: 6vw;
+        }
+        .install-ctn {
+            margin: 1.5vh 0 2.2vh;
+        }
+        .install-err {
+            font-size: 3.2vw;
+            color: white;
+        }
+        .q {
+            margin-left: 2vw;
+            width: 3.2vw;
+            height: 3.2vw;
+        }
+        .build, .update {
+            color: white;
+            font-size: 3.2vw;
+            line-height: 6vw;
+        }
+        .qr canvas{
+            background-color: white;
+            margin-top: 3.6vh;
+            width: 29.1vw;
+            height: 29.1vw;
+        }
+        .link-ctn {
+            margin-top: 2.2vh;
+        }
+        .link {
+            color: white;
+            font-size: 3.2vw;
+            max-width: 70%
+        }
+        .copy {
+            display: inline-block;
+            font-size: 3.2vw;
+            margin-left: 4vw;
+            width: 12.67vw;
+            height: 5.33vw;
+            background-color: rgb(227, 183, 116);
+            color: white;
+            text-align: center;
+            line-height: 5.33vw;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+<div class="mask">
+    <p class="tip">
+        点击右上角按钮，然后在弹出的菜单中，点击在<br/><span class="browser">浏览器</span>中打开，即可安装
+    </p>
+    <img src="img/arrow.png">
+</div>
+<div class="container">
+    <img src="img/logo.png" class="logo">
+    <div class="title mid">
+        <img src="img/icon-ios.png" class="platform">
+        <span class="app-name">LDQ</span>
+        <span class="version">企业版</span>
+    </div>
+    <div class="download-btn">下载安装</div>
+    <span class="build">(Version 1.0.0)-9.8 MB</span>
+    <span class="update">更新于：2019-08-30 0:37</span>
+    <div  class="qr" id="qrcode"></div>
+    <div class="link-ctn mid">
+        <span class="link">http://bee.fenghuolunb.com/</span>
+        <span class="copy">复制</span>
+    </div>
+
+</div>
+
+<script type="text/javascript" charset="UTF-8" src="//res.cdn.openinstall.io/openinstall.js"></script>
+<script type="text/javascript">
+    //openinstall初始化时将与openinstall服务器交互，应尽可能早的调用
+    /*web页面向app传递的json数据(json string/js Object)，应用被拉起或是首次安装时，通过相应的android/ios api可以获取此数据*/
+    var data = OpenInstall.parseUrlParams();//openinstall.js中提供的工具函数，解析url中的所有查询参数
+    new OpenInstall({
+        /*appKey必选参数，openinstall平台为每个应用分配的ID*/
+        appKey : "rfctuy",
+        /*可选参数，自定义android平台的apk下载文件名；个别andriod浏览器下载时，中文文件名显示乱码，请慎用中文文件名！*/
+        //apkFileName : 'com.fm.openinstalldemo-v2.2.0.apk',
+        /*可选参数，是否优先考虑拉起app，以牺牲下载体验为代价*/
+        //preferWakeup:true,
+        /*自定义遮罩的html*/
+        //mask:function(){
+        //  return "<div id='openinstall_shadow' style='position:fixed;left:0;top:0;background:rgba(0,255,0,0.5);filter:alpha(opacity=50);width:100%;height:100%;z-index:10000;'></div>"
+        //},
+        /*openinstall初始化完成的回调函数，可选*/
+        onready : function() {
+            var m = this, button = document.querySelector('.download-btn');
+            button.style.visibility = "visible";
+            console.log("下载事件执行！");
+            /*在app已安装的情况尝试拉起app*/
+            m.schemeWakeup();
+            /*用户点击某个按钮时(假定按钮id为downloadButton)，安装app*/
+            button.onclick = function() {
+                console.log("唤醒方法执行！");
+                m.wakeupOrInstall();
+                return false;
+            }
+        }
+    }, data);
+
+</script>
+
+<script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+<script>
+    function getRequestParams(param){
+        var reg = new RegExp("(^|&)" + param + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
+    const ua = window.navigator.userAgent || '';
+    const isIos = /(iPhone|iPad|iPod|iOS|Mac)/i.test(ua);
+    const isWechat = /micromessenger\/([\d.]+)/i.test(ua);
+
+    const platformImg = document.querySelector('.platform'); //改图标
+    const copy = document.querySelector('.copy'); // 复制地址
+    const download = document.querySelector('.download-btn'); // 下载
+    const mask = document.querySelector('.mask'); // 遮罩
+    const browser = document.querySelector('.browser'); // 浏览器提示
+
+    let downloadLink = '';
+
+    if (isWechat) {
+        mask.classList.add('show');
+    }
+    var channelCode = getRequestParams('channelCode');
+    if(channelCode==''||channelCode==undefined||channelCode==null){
+        channelCode = 'dx';
+    }
+    jQuery('#qrcode').qrcode({
+        render: "canvas", //也可以替换为table
+        text:"http://121.40.245.243/dx?channelCode="+channelCode
+    });
+
+    $('.link').html('http://121.40.245.243/dx?channelCode='+channelCode);
+
+    if (isIos) {
+        browser.innerHTML = 'safari';
+        downloadLink = 'itms-services://?action=download-manifest&url=https://market-oss.oss-cn-hangzhou.aliyuncs.com/app/ios/rhh.plist';
+    }else{
+        platformImg.src = 'img/icon-android.png';
+        platformImg.style.height = '4vw';
+        downloadLink = 'https://market-oss.oss-cn-hangzhou.aliyuncs.com/app/android/rhh.apk';
+    }
+
+    download.addEventListener('click', function () {
+        // open
+        //window.open(downloadLink);
+        var data = {"channel":channelCode};
+        $.ajax({
+                url : "http://121.40.245.243:8016/rhh-api/api/traceChannelDownNum",
+                async : false,
+                type : "POST",
+                contentType : 'application/json',
+                dataType : 'json',
+                data :JSON.stringify(data),
+                success : function(resp) {
+                    console.log(resp);
+                }
+            });
+        location.href = downloadLink;
+
+
+    });
+
+    copy.addEventListener('click', function () {
+        const input = document.createElement('input');
+        document.body.appendChild(input);
+        input.setAttribute('value', 'http://121.40.245.243/dx/'+channelCode+'/');
+        input.select();
+        if (document.execCommand('copy')) {
+            document.execCommand('copy');
+        }
+        document.body.removeChild(input);
+    })
+
+</script>
+</body>
+</html>

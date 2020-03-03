@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.dkgj.dao.LogupsertDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.dkgj.entity.LogupsertEntity" id="logupsertMap">
+        <result property="id" column="id"/>
+        <result property="tabname" column="tabName"/>
+        <result property="formdata" column="formData"/>
+        <result property="editid" column="editId"/>
+        <result property="byuid" column="byUid"/>
+        <result property="createdat" column="createdAt"/>
+        <result property="deletedat" column="deletedAt"/>
+    </resultMap>
+
+
+</mapper>

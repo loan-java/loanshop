@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+            <#if shiro.hasPermission("sys:popup:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+            </#if>
+            <#if shiro.hasPermission("sys:popup:update")>
+                <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+            </#if>
+            <!--<#if shiro.hasPermission("sys:popup:delete")>
+                <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+            </#if>-->
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-2 control-label">标题</div>
+                <div class="col-sm-10" style="padding-left:14px;">
+                    <input type="text" class="form-control" v-model="popup.name" placeholder=""/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">展示图片</div>
+                <div class="col-sm-10" style="padding-left:14px;">
+                    <input type="hidden" id="fileCallback" v-model="popup.imgPath"/>
+                    <div id="drop-area" class="file" style="width:100px;height: 100px;">
+                        <input type="file" title="Click to add Files">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-sm-2 control-label">选择展示渠道</div>
+                <div class="col-sm-10" style="padding-left:14px;">
+                    <input type="hidden"  v-model="popup.channel"/>
+                    <select class="form-control chosen-select" id="channelSelect" data-placeholder="选择渠道(可多选)" multiple>
+                        <option value="all">全部</option>
+                        <option v-for="channel in channels" v-bind:value="channel.channelcode">
+                            {{channel.channelname}}-({{ channel.channelcode }})
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">选择展示产品</div>
+                <div class="col-sm-10" style="padding-left:14px;">
+                    <select id="qrelId" class="form-control" v-model="popup.loanId">
+                        <option value="">全部</option>
+                        <option v-for="option in options" v-bind:value="option.id">
+                            {{option.id}}-({{ option.title }})
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">操作系统</div>
+                <div class="col-sm-3">
+                    <select class="form-control" v-model="popup.os">
+                        <option value="1">iOS</option>
+                        <option value="2">Android</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-2 control-label">产品状态</div>
+                <div class="col-sm-3">
+                    <select class="form-control" v-model="popup.state">
+                        <option value="1">上架</option>
+                        <option value="2">暂时下架</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/popup.js?_${.now?long}"></script>
+</body>
+</html>

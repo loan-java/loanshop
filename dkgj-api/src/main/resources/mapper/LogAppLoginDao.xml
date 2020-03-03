@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.dkgj.dao.LogAppLoginDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.dkgj.entity.LogAppLoginEntity" id="logAppLoginMap">
+        <result property="id" column="id"/>
+        <result property="channel" column="channel"/>
+        <result property="userId" column="user_id"/>
+        <result property="type" column="type"/>
+        <result property="mac" column="mac"/>
+        <result property="createdat" column="createDat"/>
+        <result property="updatedat" column="updateDat"/>
+    </resultMap>
+
+
+</mapper>

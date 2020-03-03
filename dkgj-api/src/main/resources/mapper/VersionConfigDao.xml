@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.dkgj.dao.VersionConfigDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.dkgj.entity.VersionConfigEntity" id="versionConfigMap">
+        <result property="id" column="id"/>
+        <result property="type" column="type"/>
+        <result property="chCode" column="channel"/>
+        <result property="version" column="version"/>
+        <result property="content" column="content"/>
+        <result property="isForce" column="is_force"/>
+        <result property="link" column="link"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
+    <!-- 根据key，查询value -->
+    <select id="findNewsVersion" parameterType="map" resultType="io.dkgj.entity.VersionConfigEntity">
+        select * from tb_version_config where type = #{type}
+        and channel = #{chCode}
+        order by id desc
+        limit 0,1
+    </select>
+
+    <!-- 根据key，查询value -->
+    <select id="findGeneralNewsVersion" parameterType="map" resultType="io.dkgj.entity.VersionConfigEntity">
+        select * from tb_version_config
+        where 1=1
+        <if test="type !=null and type !=''">
+           and type = #{type}
+        </if>
+        AND channel not in ('xlh','mhfq','fmqd')
+        order by id desc
+        limit 0,1
+    </select>
+
+</mapper>

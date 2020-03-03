@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.dkgj.modules.sys.dao.ChannelManageDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.dkgj.modules.sys.entity.ChannelManageEntity" id="channelManageMap">
+        <result property="id" column="id"/>
+        <result property="channelurl" column="channelUrl"/>
+        <result property="channelcode" column="channelCode"/>
+        <result property="channelname" column="channelName"/>
+        <result property="state" column="state"/>
+        <result property="remark" column="remark"/>
+        <result property="createdat" column="createdAt"/>
+        <result property="updatedat" column="updatedAt"/>
+        <result property="deletedat" column="deletedAt"/>
+        <result property="checkregisterurl" column="checkRegisterUrl"/>
+        <result property="deductstatus" column="deductStatus"/>
+        <result property="deductbase" column="deductBase"/>
+        <result property="deductratio" column="deductRatio"/>
+    </resultMap>
+
+
+</mapper>

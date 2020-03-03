@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+		<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+            <div class="form-group col-sm-4">
+                <label for="qchannel" class="col-sm-3 control-label">渠道</label>
+                <div class="col-sm-9">
+                    <input type="text" id="qchannel" class="form-control" v-model="q.channel" @keyup.enter="query"
+                           placeholder="ID">
+                </div>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="qcreatedAt" class="col-sm-3 control-label">创建时间</label>
+                <div class="col-sm-9">
+                    <input type="text" id="qcreatedAt" class="form-control" v-model="q.createdAt" @keyup.enter="query"
+                           placeholder="时间范围选择">
+                </div>
+            </div>
+            <br/><br/>
+            <br/>
+            <a class="btn btn-default" @click="query">查询</a>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label"></div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="historyLogChannel.channel" placeholder=""/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label"></div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="historyLogChannel.clicknum" placeholder=""/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label"></div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="historyLogChannel.regnum" placeholder=""/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label"></div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="historyLogChannel.createdat" placeholder=""/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label"></div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="historyLogChannel.updatedat" placeholder=""/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label"></div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="historyLogChannel.deletedat" placeholder=""/>
+                        </div>
+                    </div>
+                <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/historylogchannel.js?_${.now?long}"></script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+            <div class="form-group col-sm-4">
+                <label for="qid" class="col-sm-3 control-label">ID</label>
+                <div class="col-sm-9">
+                    <input type="text" id="qid" class="form-control" v-model="q.id" @keyup.enter="query"
+                           placeholder="ID">
+                </div>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="qtitle" class="col-sm-3 control-label">名称</label>
+                <div class="col-sm-9">
+                    <input type="text" id="qtitle" class="form-control" v-model="q.title" @keyup.enter="query"
+                           placeholder="名称">
+                </div>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="qstate" class="col-sm-3 control-label">状态</label>
+                <div class="col-sm-9">
+                    <select id="qstate" class="form-control" v-model="q.state">
+                        <option value="">全部</option>
+                        <option value="1">上架</option>
+                        <option value="2">暂时下架</option>
+                        <option value="3">等待上架</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="qtags" class="col-sm-3 control-label">贷款类型</label>
+                <div class="col-sm-9">
+                    <select id="qtags" class="form-control" v-model="q.tags">
+                        <option value="">全部</option>
+                        <option value="HIGH">贷款额度高</option>
+                        <option value="LOW">贷款利率低</option>
+                        <option value="FAST">放款速度快</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="qapplyurl" class="col-sm-3 control-label">申请链接</label>
+                <div class="col-sm-9">
+                    <input type="text" id="qapplyurl" class="form-control" v-model="q.applyurl" @keyup.enter="query"
+                           placeholder="申请链接">
+                </div>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="qbadge" class="col-sm-3 control-label">角标</label>
+                <div class="col-sm-9">
+                    <select id="qbadge" class="form-control" v-model="q.badge">
+                        <option value="">全部</option>
+                        <option value="RECOMMENDED">推荐</option>
+                        <option value="HOT">爆款</option>
+                        <option value="OPTIMIZATION">优选</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="qcreatedAt" class="col-sm-3 control-label">创建时间</label>
+                <div class="col-sm-9">
+                    <input type="text" id="qcreatedAt" class="form-control" v-model="q.createdAt" @keyup.enter="query"
+                           placeholder="时间范围选择">
+                </div>
+            </div>
+            <br/><br/>
+            <br/><br/>
+            <br/>
+            <br/>
+            <br/><br/>
+            <a class="btn btn-default" @click="query">查询</a>
+            <#if shiro.hasPermission("sys:loan:save")>
+                <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;添加贷款</a>
+            </#if>
+            <#if shiro.hasPermission("sys:loan:update")>
+                <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+            </#if>
+</div>
+<table id="jqGrid"></table>
+<div id="jqGridPager"></div>
+</div>
+
+<div v-show="!showList" class="panel panel-default">
+    <div class="panel-heading">{{title}}</div>
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <div class="col-sm-2 control-label">名称</div>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" v-model="loan.title" placeholder=""/>
+            </div>
+            <div class="col-sm-2 control-label">状态</div>
+            <div class="col-sm-3">
+                <select class="form-control" v-model="loan.state" placeholder="请选择">
+                    <option value="1">上架</option>
+                    <option value="3">等待上架</option>
+                    <option value="2">暂时下架</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">产品类型</div>
+            <div class="col-sm-3">
+                <select class="form-control" v-model="loan.type" placeholder="请选择">
+                    <option value="0">全部</option>
+                    <option value="1">身份证贷</option>
+                    <option value="2">高通过率</option>
+                    <option value="3">超低门槛</option>
+                    <option value="4">极速下款</option>
+                </select>
+            </div>
+            <div class="col-sm-2 control-label">角标</div>
+            <div class="col-sm-3">
+                <select class="form-control" v-model="loan.badge" placeholder="请选择">
+                    <option value="HOT">爆款</option>
+                    <option value="RECOMMENDED">推荐</option>
+                    <option value="OPTIMIZATION">优选</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">贷款类型</div>
+            <div class="col-sm-3">
+                <select class="form-control" v-model="loan.tags" placeholder="请选择">
+                    <option value="HIGH">贷款额度高</option>
+                    <option value="LOW">贷款利率低</option>
+                    <option value="FAST">放款速度快</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">最低可贷</div>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" v-model="loan.minloan" placeholder="单位为元"/>
+            </div>
+            <div class="col-sm-2 control-label">最高可贷</div>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" v-model="loan.maxloan" placeholder="单位为元"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">费率</div>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" v-model="loan.raterange" placeholder="月：xx% 或 日： xx%"/>
+            </div>
+            <div class="col-sm-2 control-label">贷款期限</div>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" v-model="loan.periodrange" placeholder="如： 1-6个月"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">申请链接</div>
+            <div class="col-sm-10" style="padding-left:14px;">
+                <input type="text" class="form-control" v-model="loan.applyurl" placeholder=""/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">位置</div>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" v-model="loan.weights" placeholder="越小越靠前"/>
+            </div>
+            <div class="col-sm-2 control-label">申请人数</div>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" v-model="loan.applynum" placeholder=""/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label">简介</div>
+            <div class="col-sm-10" style="padding-left:14px;">
+                <input type="text" class="form-control" v-model="loan.intro" placeholder=""/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">申请条件</div>
+            <div class="col-sm-10" style="padding-left:14px;">
+
+    <textarea class="form-control" v-model="loan.applyinfo">申请条件
+    1、
+
+    申请材料
+    1、
+
+    审核说明
+    审核方式：
+    放款时间：
+    还款方式：
+    </textarea>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">图标</div>
+            <div class="col-sm-10" style="padding-left:14px;">
+                <input type="hidden" id="fileCallback" v-model="loan.logo"/>
+                <div id="drop-area" class="file" style="width:100px;height: 100px;">
+                    <input type="file" title="Click to add Files">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label">LDQ后台系统地址</div>
+            <div class="col-sm-10" style="padding-left:14px;">
+                <input type="text" class="form-control" v-model="loan.managelink" placeholder=""/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">账号</div>
+            <div class="col-sm-10" style="padding-left:14px;">
+                <input type="text" class="form-control" v-model="loan.manageaccount" placeholder=""/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">密码</div>
+            <div class="col-sm-10" style="padding-left:14px;">
+                <input type="text" class="form-control" v-model="loan.managepassword" placeholder=""/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">应用市场</div>
+            <div class="col-sm-10" style="padding-left:14px;">
+                <input type="text" class="form-control" v-model="loan.market" placeholder="请输入应用市场编码 如：vivo"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label"></div>
+            <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+            &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+        </div>
+    </form>
+</div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/apploan.js?_${.now?long}"></script>
+</body>
+</html>

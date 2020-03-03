@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.dkgj.dao.LogVisitDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.dkgj.entity.LogVisitEntity" id="logVisitMap">
+        <result property="id" column="id"/>
+        <result property="channel" column="channel"/>
+        <result property="deviceid" column="deviceId"/>
+        <result property="daytimes" column="dayTimes"/>
+        <result property="ip" column="ip"/>
+        <result property="mobile" column="mobile"/>
+        <result property="createdat" column="createdAt"/>
+        <result property="updatedat" column="updatedAt"/>
+        <result property="deletedat" column="deletedAt"/>
+    </resultMap>
+
+    <insert id="saveUnique" parameterType="io.dkgj.entity.LogVisitEntity">
+        INSERT IGNORE INTO `log_visit` (
+                  `channel`,
+                  `deviceId`,
+                  `dayTimes`,
+                  `mobile`,
+                  `loanId`,
+                  `ip`,
+                  `createdAt`,
+                  `updatedAt`,
+                  `deletedAt`
+                )
+            SELECT
+                  #{channel},
+                  #{deviceid},
+                  #{daytimes},
+                  #{mobile},
+                  #{loanid},
+                  #{ip},
+                  #{createdat},
+                  #{updatedat},
+                  #{deletedat} FROM dual
+            WHERE NOT EXISTS
+             (SELECT * FROM  `log_visit`
+               WHERE deviceId = #{deviceid}
+               and loanId = #{loanid}
+               and mobile = #{mobile}
+               and ip = #{ip}
+               and TO_DAYS(createdAt) = TO_DAYS(NOW()))
+    </insert>
+</mapper>

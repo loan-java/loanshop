@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.dkgj.dao.LogChannelTodayVistDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.dkgj.entity.LogChannelTodayVistEntity" id="logChannelTodayVistMap">
+        <result property="id" column="id"/>
+        <result property="channel" column="channel"/>
+        <result property="pv" column="pv"/>
+        <result property="uv" column="uv"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
+
+    <insert id="saveUnique" parameterType="io.dkgj.entity.LogChannelTodayVistEntity">
+        INSERT IGNORE INTO `log_channel_today_vist` (
+                  `channel`,
+                  `pv`,
+                  `uv`,
+                  `create_date`,
+                  `update_date`
+                )
+            SELECT
+                  #{channel},
+                  #{pv},
+                  #{uv},
+                  #{createDate},
+                  #{updateDate}
+                  FROM dual
+            WHERE NOT EXISTS
+             (SELECT * FROM  `log_channel_today_vist` WHERE channel = #{channel} and TO_DAYS(create_date) = TO_DAYS(NOW()))
+    </insert>
+
+
+    <update id="updatePv" parameterType="long">
+        update log_channel_today_vist set pv = pv + 1 ,update_date = now() where id = #{id}
+    </update>
+
+    <update id="updateUv" parameterType="long">
+        update log_channel_today_vist set uv = uv + 1 ,update_date = now() where id = #{id}
+    </update>
+
+
+</mapper>

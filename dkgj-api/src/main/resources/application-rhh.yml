@@ -1,0 +1,59 @@
+# Tomcat
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+  port: 8016
+  servlet:
+    context-path: /rhh-api
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://47.96.118.185:3306/market?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      username: root
+      password: shuailijie*CF2
+      initial-size: 10
+      max-active: 100
+      min-idle: 10
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      #Oracle需要打开注释
+      #validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        #login-username: admin
+        #login-password: admin
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: false
+        wall:
+          config:
+            multi-statement-allow: true
+
+##多数据源的配置，需要引用renren-dynamic-datasource
+#dynamic:
+#  datasource:
+#    business:
+#      driver-class-name: com.mysql.jdbc.Driver
+#      url: jdbc:mysql://rm-bp1jap4py371i9k320o.mysql.rds.aliyuncs.com:3306/loan56-dev?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+#      username: loan56
+#      password: Qtz@2019
+app:
+  config:
+    app: 5
+    sign: LDQ
+    accesskey: 631mySZo3d6wHz57
+    accessSecret: GGhPMsXyIGRkhAiHSbc41lS0oIqXlkdq

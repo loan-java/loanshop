@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.dkgj.dao.LogdeviceDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.dkgj.entity.LogdeviceEntity" id="logdeviceMap">
+        <result property="id" column="id"/>
+        <result property="uuid" column="uuid"/>
+        <result property="deviceToken" column="device_token"/>
+        <result property="bundleId" column="bundle_id"/>
+        <result property="ip" column="ip"/>
+        <result property="createdat" column="createdAt"/>
+        <result property="updatedat" column="updatedAt"/>
+        <result property="deletedat" column="deletedAt"/>
+    </resultMap>
+
+
+</mapper>

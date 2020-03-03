@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.dkgj.dao.LogChannelDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.dkgj.entity.LogChannelEntity" id="logChannelMap">
+        <result property="id" column="id"/>
+        <result property="channel" column="channel"/>
+        <result property="clicknum" column="clickNum"/>
+        <result property="regnum" column="regNum"/>
+        <result property="appOpenNum" column="app_open_num"/>
+        <result property="clickdownnum" column="clickDownNum"/>
+        <result property="createdat" column="createdAt"/>
+        <result property="updatedat" column="updatedAt"/>
+        <result property="deletedat" column="deletedAt"/>
+        <result property="uv_num" column="uv_num"/>
+    </resultMap>
+
+    <insert id="saveUnique" parameterType="io.dkgj.entity.LogChannelEntity">
+        INSERT IGNORE INTO `log_channel` (
+                  `channel`,
+                  `clickNum`,
+                  `regNum`,
+                  `createdAt`,
+                  `updatedAt`,
+                  `deletedAt`,
+                  `app_open_num`,
+                  `clickdownnum`,
+                  `uv_num`
+            )
+            SELECT
+                  #{channel},
+                  #{clicknum},
+                  #{regnum},
+                  #{createdat},
+                  #{updatedat},
+                  #{deletedat},
+                  #{appOpenNum},
+                  #{clickdownnum},
+                  #{uvNum} FROM dual
+            WHERE NOT EXISTS
+             (SELECT * FROM  `log_channel` WHERE channel = #{channel} and TO_DAYS(createdAt) = TO_DAYS(NOW()))
+    </insert>
+
+    <select id="getOneForUpdate" resultType="io.dkgj.entity.LogChannelEntity" parameterType="map">
+        SELECT * FROM  `log_channel`
+        WHERE channel = #{channelId}
+        and DATE_FORMAT(createdAt,'%Y-%m-%d') = #{nowDay}
+        for update
+    </select>
+
+    <update id="updateUv" parameterType="int">
+        update log_channel set uv_num = uv_num + 1 ,updatedAt=now() where id = #{id}
+    </update>
+
+    <update id="updateClickNum" parameterType="int">
+        update log_channel set clickNum = clickNum + 1 ,updatedAt=now() where id = #{id}
+    </update>
+
+    <update id="updateAppOpenNum" parameterType="int">
+        update log_channel set app_open_num = app_open_num + 1 ,updatedAt=now() where id = #{id}
+    </update>
+
+    <update id="updateClickDownNum" parameterType="int">
+        update log_channel set clickDownNum = clickDownNum + 1 ,updatedAt=now() where id = #{id}
+    </update>
+
+    <update id="updateRegNum" parameterType="int">
+        update log_channel set regNum = regNum + 1 ,updatedAt=now() where id = #{id}
+    </update>
+
+</mapper>

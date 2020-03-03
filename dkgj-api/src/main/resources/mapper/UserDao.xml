@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.dkgj.dao.UserDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.dkgj.entity.UserEntity" id="userMap">
+        <result property="id" column="id"/>
+        <result property="mobile" column="mobile"/>
+        <result property="vcode" column="vcode"/>
+        <result property="vtime" column="vtime"/>
+        <result property="psw" column="psw"/>
+        <result property="nickname" column="nickname"/>
+        <result property="email" column="email"/>
+        <result property="avatarUrl" column="avatar_url"/>
+        <result property="wxId" column="wx_id"/>
+        <result property="state" column="state"/>
+        <result property="ip" column="ip"/>
+        <result property="lastLoginIp" column="last_login_ip"/>
+        <result property="createdat" column="createdAt"/>
+        <result property="updatedat" column="updatedAt"/>
+        <result property="deletedat" column="deletedAt"/>
+    </resultMap>
+
+    <insert id="saveAndReturn" useGeneratedKeys="true" keyProperty="id" parameterType="io.dkgj.entity.UserEntity">
+            INSERT IGNORE INTO `user` (
+              mobile,
+              vcode,
+              wx_id,
+              `state`,
+              ip,
+              created_at,
+              updatedAt
+            )
+            SELECT
+              #{mobile},
+              #{vcode},
+              #{wxId},
+              #{state},
+              #{ip},
+              #{createdAt},
+              #{updatedat} FROM dual
+            WHERE NOT EXISTS
+             (SELECT * FROM  `user` WHERE mobile = #{mobile})
+    </insert>
+
+    <select id="findTodayUserByMobile" resultType="io.dkgj.entity.UserEntity" parameterType="string">
+        select * from user
+        where
+        mobile = #{mobile}
+        and to_days(created_at) = to_days(now())
+    </select>
+
+
+</mapper>

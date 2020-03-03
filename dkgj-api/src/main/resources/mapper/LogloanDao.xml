@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.dkgj.dao.LogloanDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.dkgj.entity.LogloanEntity" id="logloanMap">
+        <result property="id" column="id"/>
+        <result property="relid" column="relId"/>
+        <result property="refer" column="refer"/>
+        <result property="pv" column="pv"/>
+        <result property="uv" column="uv"/>
+        <result property="note" column="note"/>
+        <result property="createdat" column="createdAt"/>
+        <result property="updatedat" column="updatedAt"/>
+        <result property="deletedat" column="deletedAt"/>
+    </resultMap>
+
+
+    <insert id="saveUnique" parameterType="io.dkgj.entity.LogloanEntity">
+        INSERT IGNORE INTO `logloan` (
+              `relId`,
+              `refer`,
+              `pv`,
+              `uv`,
+              `today_pv`,
+              `today_uv`,
+              `note`,
+              `createdAt`,
+              `updatedAt`,
+              `deletedAt`
+            )
+            SELECT
+              #{relid},
+              #{refer},
+              #{pv},
+              #{uv},
+              #{todayPv},
+              #{todayUv},
+              #{note},
+              #{createdat},
+              #{updatedat},
+              #{deletedat} FROM dual
+            WHERE NOT EXISTS
+             (SELECT * FROM  `logloan` WHERE relId = #{relid} and TO_DAYS(createdat) = TO_DAYS(NOW()))
+    </insert>
+
+    <select id="getOneForUpdate" parameterType="map" resultType="io.dkgj.entity.LogloanEntity">
+        SELECT * FROM  `logloan`
+        WHERE relId = #{relId}
+        and DATE_FORMAT(createdAt,'%Y-%m-%d') = #{nowDay}
+        for update
+    </select>
+
+    <update id="updatePv" parameterType="int">
+        update logloan set pv = pv + 1 ,updatedAt = now() where id = #{id}
+    </update>
+
+    <update id="updateTodayPv" parameterType="int">
+        update logloan set today_pv = today_pv + 1 ,updatedAt = now() where id = #{id}
+    </update>
+
+    <update id="updateUv" parameterType="int">
+        update logloan set uv = uv + 1 ,updatedAt = now() where id = #{id}
+    </update>
+
+    <update id="downLoanIfUvMax" parameterType="int">
+        update logloan a, loan b set  b.state=2,b.updatedAt = now() where a.id = #{id} and b.id=a.relId and b.maxuv is not null and a.uv>=b.maxuv;
+    </update>
+
+    <update id="updateTodayUv" parameterType="int">
+        update logloan set today_uv = today_uv + 1 ,updatedAt = now() where id = #{id}
+    </update>
+
+</mapper>

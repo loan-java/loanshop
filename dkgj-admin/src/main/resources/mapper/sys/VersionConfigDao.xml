@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.dkgj.modules.sys.dao.VersionConfigDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.dkgj.modules.sys.entity.VersionConfigEntity" id="versionConfigMap">
+        <result property="id" column="id"/>
+        <result property="channel" column="channel"/>
+        <result property="type" column="type"/>
+        <result property="version" column="version"/>
+        <result property="content" column="content"/>
+        <result property="isForce" column="is_force"/>
+        <result property="link" column="link"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
+
+</mapper>

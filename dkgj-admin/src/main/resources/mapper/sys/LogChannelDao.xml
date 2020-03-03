@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.dkgj.modules.sys.dao.LogChannelDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.dkgj.modules.sys.entity.LogChannelEntity" id="logChannelMap">
+        <result property="id" column="id"/>
+        <result property="channel" column="channel"/>
+        <result property="clicknum" column="clickNum"/>
+        <result property="regnum" column="regNum"/>
+        <result property="appOpenNum" column="app_open_num"/>
+        <result property="clickdownnum" column="clickDownNum"/>
+        <result property="createdat" column="createdAt"/>
+        <result property="updatedat" column="updatedAt"/>
+        <result property="deletedat" column="deletedAt"/>
+        <result property="uv" column="uv"/>
+    </resultMap>
+
+    <select id="selectSum" resultType="java.util.HashMap" parameterType="map">
+        select sum(t1.clickNum) as clickNum, sum(t1.regNum) as regNum, sum(t1.uv_num) as uvNum,
+        sum(clickdownnum) as appDownNum,
+        sum(app_open_num) as appOpenNum,
+        (SELECT COUNT(1) AS loanUvNum FROM (SELECT DISTINCT deviceId, mobile, loanId, channel,ip FROM log_visit
+        WHERE 1 = 1
+        <if test="beginTime !=null and endTime != null">
+            and createdAt between #{beginTime} and #{endTime}
+        </if>
+        <if test="id !=null and id != ''">
+            and channel in (SELECT channelCode FROM channel_manage WHERE id IN (SELECT channel FROM log_channel WHERE id = #{id}))
+        </if>
+        ) AS t) AS loanUvNum
+        from log_channel t1
+        where true
+        and
+        (
+        t1.channel in (SELECT channelCode FROM channel_manage WHERE state = 0)
+        or
+        t1.channel in (SELECT id FROM channel_manage WHERE state = 0)
+        )
+        <if test="id !=null and id != ''">
+            and t1.id = #{id}
+        </if>
+        <if test="channel !=null and channel != ''">
+            and t1.channel = #{channel}
+        </if>
+        <if test="beginTime !=null and endTime != null">
+            and t1.createdAt between #{beginTime} and #{endTime}
+        </if>
+        <if test="channelId > 0">
+            and t1.channel = #{channelId}
+        </if>
+    </select>
+
+    <select id="selectLogChannelList" resultType="io.dkgj.modules.sys.entity.LogChannelEntity" parameterType="map">
+        SELECT
+          t1.*,
+          t3.channelRegNum,
+          (SELECT
+            COUNT(1) AS loanuvnum
+          FROM
+            (SELECT DISTINCT
+              deviceId,
+              mobile,
+              loanId,
+              channel,
+              ip
+            FROM
+              log_visit
+            WHERE 1 = 1
+            <if test="beginDate != null and endDate != null">
+                AND createdAt BETWEEN #{beginDate} AND #{endDate}
+            </if>
+            GROUP BY deviceId,
+              mobile,
+              loanId,
+              channel) AS t
+          WHERE channel =
+            (SELECT
+              channelCode
+            FROM
+              channel_manage
+            WHERE id = t1.channel)
+          GROUP BY channel) AS loanUvNum
+        FROM
+          log_channel t1
+        left join channel_manage t2 on t1.channel = t2.id
+        left join (
+        SELECT COUNT(1) as channelRegNum,wx_id FROM USER
+        WHERE created_at BETWEEN #{beginDate} AND #{endDate}
+        GROUP BY wx_id
+        ) t3 on t2.channelCode = t3.wx_id
+        WHERE 1 = 1
+          <if test="beginDate != null and endDate != null">
+              AND t1.createdAt BETWEEN #{beginDate} AND #{endDate}
+          </if>
+          <if test="channelId != null">
+              and t1.channel = #{channelId}
+          </if>
+          and channel in (SELECT id FROM channel_manage WHERE state = 0)
+          <if test="id != null">
+              and id = #{id}
+          </if>
+    </select>
+
+
+</mapper>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.dkgj.modules.sys.dao.HistoryLogChannelDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.dkgj.modules.sys.entity.HistoryLogChannelEntity" id="historyLogChannelMap">
+        <result property="id" column="id"/>
+        <result property="channel" column="channel"/>
+        <result property="clicknum" column="clickNum"/>
+        <result property="regnum" column="regNum"/>
+        <result property="createdat" column="createdAt"/>
+        <result property="updatedat" column="updatedAt"/>
+        <result property="deletedat" column="deletedAt"/>
+    </resultMap>
+
+    <select id="selectSum" resultType="java.util.HashMap" parameterType="map">
+        select sum(clickNum) as clickNum, sum(regNum) as regNum, sum(uv_num) as uvNum,
+        sum(clickdownnum) as appDownNum,
+        sum(app_open_num) as appOpenNum,
+        sum(loan_uv_num) as loanUvNum
+        from history_log_channel
+        where 1 = 1
+        <if test="id !=null and id != ''">
+            and id = #{id}
+        </if>
+        <if test="channel !=null and channel != ''">
+            and channel = #{channel}
+        </if>
+        <if test="beginTime !=null and endTime != null">
+            and createdAt between #{beginTime} and #{endTime}
+        </if>
+        <if test="channelId > 0">
+            and channel = #{channelId}
+        </if>
+    </select>
+
+    <insert id="copyData" parameterType="map">
+        INSERT INTO history_log_channel
+        (channel,clickNum,regNum,createdAt,updatedAt,deletedAt,app_open_num,clickdownnum,uv_num,loan_uv_num)
+        SELECT
+        channel,
+        IF(t2.deductStatus = 1 AND t1.clickNum > t2.deductBase,(t1.clickNum-t2.deductBase)*(1-t2.deductRatio)+t2.deductBase,t1.clickNum) AS clickNum,
+        -- clickNum,
+        IF(t2.deductStatus = 1 AND t3.channelRegNum > t2.deductBase,(t3.channelRegNum-t2.deductBase)*(1-t2.deductRatio)+t2.deductBase , t3.channelRegNum) AS regNum,
+        t1.createdAt,
+        t1.updatedAt,
+        t1.deletedAt,
+        t1.app_open_num,
+        t1.clickdownnum,
+        IF(t2.deductStatus = 1 AND t1.uv_num > t2.deductBase,(t1.uv_num-t2.deductBase)*(1-t2.deductRatio)+t2.deductBase , t1.uv_num) AS uv_num,
+        (SELECT COUNT(1) AS loanUvNum FROM (SELECT DISTINCT deviceId, mobile, loanId, channel FROM log_visit
+        WHERE 1 = 1
+        <if test=" beginDate != null and endDate !=null ">
+            AND createdAt BETWEEN #{beginDate} AND #{endDate}
+        </if>
+        GROUP BY deviceId, mobile, loanId, channel) AS t
+        WHERE channel = (SELECT channelCode FROM channel_manage WHERE id = t1.channel) GROUP BY channel) AS loan_uv_num
+        FROM log_channel t1 LEFT JOIN channel_manage t2 ON t1.channel = t2.id
+        left join (
+            SELECT COUNT(1) as channelRegNum,wx_id FROM USER
+            WHERE created_at BETWEEN #{beginDate} AND #{endDate}
+            GROUP BY wx_id
+        ) t3 on t2.channelCode = t3.wx_id
+        <if test=" beginDate != null and endDate !=null ">
+            WHERE t1.createdAt BETWEEN #{beginDate} AND #{endDate}
+        </if>
+    </insert>
+
+</mapper>
