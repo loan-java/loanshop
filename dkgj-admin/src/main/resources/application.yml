@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: ldq
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
@@ -11,9 +11,9 @@ spring:
       enabled: true
   redis:
     database: 0
-    host: 47.96.118.185
+    host: 47.114.163.8
     port: 6379
-    password: test123456
+    password: 4f12o*AKQu
     timeout: 6000ms  # 连接超时时长（毫秒）
     jedis:
       pool:

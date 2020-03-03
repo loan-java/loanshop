@@ -2,7 +2,7 @@
 spring:
   # 环境 dev|test|prod
   profiles:
-    active: rhh
+    active: ldq
   servlet:
     multipart:
       max-file-size: 100MB
@@ -10,9 +10,9 @@ spring:
       enabled: true
   redis:
     database: 0
-    host: r-bp1nuj9jin8j0zgt1i.redis.rds.aliyuncs.com
+    host: 47.114.163.8
     port: 6379
-    password: rekkdlsOIWJ239!#k
+    password: 4f12o*AKQu
     timeout: 6000ms  # 连接超时时长（毫秒）
     jedis:
       pool:
