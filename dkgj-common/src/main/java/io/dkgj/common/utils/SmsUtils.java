@@ -199,6 +199,6 @@ public class SmsUtils {
 
 
     public static void main(String[] args) throws Exception {
-        SmsUtils.sendMOSms("httz001","4dae6489da13cc5285058c9124346ef0", "易财钱包", "15260282340", "12345");
+        SmsUtils.sendMOSms("httz001","4dae6489da13cc5285058c9124346ef0", "易财钱包", "15868417851", "12345");
     }
 }

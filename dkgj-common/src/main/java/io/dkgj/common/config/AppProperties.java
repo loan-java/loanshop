@@ -12,7 +12,4 @@ public class AppProperties {
     private String sign;
     private String accesskey;
     private String accessSecret;
-    private String moSign;
-    private String moUsername;
-    private String moPwd;
 }

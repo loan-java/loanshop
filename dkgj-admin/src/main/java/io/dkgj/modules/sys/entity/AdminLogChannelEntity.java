@@ -86,11 +86,13 @@ public class AdminLogChannelEntity implements Serializable {
     /**
      * 注册人均点击数=产品UV/注册数
      */
+    @TableField(exist = false)
     private BigDecimal zcrjdjs;
 
     /**
      * UV注册率 = 注册数/UV率
      */
+    @TableField(exist = false)
     private String uvzcl;
 
 

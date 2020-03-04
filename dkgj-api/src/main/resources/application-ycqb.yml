@@ -55,8 +55,5 @@ app:
   config:
     app: 1
     sign: 易财钱包
-    accesskey: 631mySZo3d6wHz57
-    accessSecret: GGhPMsXyIGRkhAiHSbc41lS0oIqXlkdq
-    moSign: 易财钱包
-    moUsername: httz001
-    moPwd: 4dae6489da13cc5285058c9124346ef0
+    accesskey: httz001
+    accessSecret: 4dae6489da13cc5285058c9124346ef0
