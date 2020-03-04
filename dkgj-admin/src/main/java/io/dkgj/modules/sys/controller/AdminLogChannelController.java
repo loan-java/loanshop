@@ -3,22 +3,25 @@ package io.dkgj.modules.sys.controller;
 import io.dkgj.common.utils.DateUtils;
 import io.dkgj.common.utils.PageUtils;
 import io.dkgj.common.utils.R;
-import io.dkgj.common.validator.ValidatorUtils;
-import io.dkgj.modules.sys.entity.ChannelManageEntity;
 import io.dkgj.modules.sys.entity.AdminLogChannelEntity;
+import io.dkgj.modules.sys.entity.ChannelManageEntity;
 import io.dkgj.modules.sys.entity.SysUserEntity;
 import io.dkgj.modules.sys.service.AdminLogChannelService;
 import io.dkgj.modules.sys.service.ChannelManageService;
-import io.dkgj.modules.sys.service.LogChannelService;
 import io.dkgj.modules.sys.shiro.ShiroUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -92,15 +95,15 @@ public class AdminLogChannelController {
                 entity.setLoanUvNum(entity.getLoanUvNum());
             }
 
-            if(null != entity.getChannelRegNum()) {
-                entity.setZcrjdjs( new BigDecimal(entity.getLoanUvNum()/(float)entity.getChannelRegNum()).setScale(2));
+            if (null != entity.getChannelRegNum() && entity.getLoanUvNum() != null) {
+                entity.setZcrjdjs(new BigDecimal(entity.getLoanUvNum() / (float) entity.getChannelRegNum()).setScale(2));
             }
 
-            if(null != entity.getUvNum()
+            if (null != entity.getUvNum()
                     && entity.getUvNum() > 0
                     && null != entity.getChannelRegNum()
-                    ) {
-                entity.setUvzcl( new BigDecimal(entity.getChannelRegNum()/(float)entity.getUvNum()*100).setScale(2) + "%");
+            ) {
+                entity.setUvzcl(new BigDecimal(entity.getChannelRegNum() / (float) entity.getUvNum() * 100).setScale(2) + "%");
             }
 
             data.add(entity);
