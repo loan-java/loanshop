@@ -88,7 +88,7 @@ public class ApiLoginController {
 //    @ApiOperation("最新手机号登录")
     public R v1getVcode(@RequestParam String mobile,
                         @RequestParam(defaultValue = "rhh", required = false) String chCode,
-                        @RequestParam(defaultValue = "LDQ", required = false) String chName,
+                        @RequestParam(defaultValue = "易财钱包", required = false) String chName,
                         @RequestParam(defaultValue = "0", required = false) String isH5) {
         log.error(String.format("v1用户：%s，验证码：%s", mobile, "请获取最新版本APP！"));
         return R.error("请获取最新版本APP！");
@@ -99,7 +99,7 @@ public class ApiLoginController {
     @ApiOperation("最新手机号登录")
     public R v2getVcode(@RequestParam String mobile,
                         @RequestParam(defaultValue = "rhh", required = false) String chCode,
-                        @RequestParam(defaultValue = "LDQ", required = false) String chName,
+                        @RequestParam(defaultValue = "易财钱包", required = false) String chName,
                         @RequestParam(defaultValue = "0", required = false) String isH5,
                         @RequestParam String uuid,
                         @RequestParam String imgCode, HttpServletRequest request) {

@@ -6,7 +6,7 @@ server:
     min-spare-threads: 30
   port: 8081
   servlet:
-    context-path: /ldq-api
+    context-path: /ycqb-api
 
 spring:
   datasource:
@@ -53,7 +53,7 @@ spring:
 #      password: Qtz@2019
 app:
   config:
-    app: 5
-    sign: LDQ
+    app: 1
+    sign: 易财钱包
     accesskey: 631mySZo3d6wHz57
     accessSecret: GGhPMsXyIGRkhAiHSbc41lS0oIqXlkdq
