@@ -83,7 +83,7 @@ public class ChannelManageController {
         channelManage.setUpdatedat(new Date());
         switch (appProperties.getApp()) {
             case 1:
-                channelManage.setChannelurl(String.format("%s%s", "http://h5.whwen.cn/#/channel-login?channelCode=", channelManage.getChannelcode()));
+                channelManage.setChannelurl(String.format("%s%s", "http://h5-register.whwen.cn/#/channel-login?channelCode=", channelManage.getChannelcode()));
                 break;
         }
         channelManageService.save(channelManage);
@@ -100,7 +100,7 @@ public class ChannelManageController {
         ValidatorUtils.validateEntity(channelManage);
         switch (appProperties.getApp()) {
             case 1:
-                channelManage.setChannelurl(String.format("%s%s", "http://h5.whwen.cn/#/channel-login?channelCode=", channelManage.getChannelcode()));
+                channelManage.setChannelurl(String.format("%s%s", "http://h5-register.whwen.cn/#/channel-login?channelCode=", channelManage.getChannelcode()));
                 break;
         }
         channelManageService.updateById(channelManage);
