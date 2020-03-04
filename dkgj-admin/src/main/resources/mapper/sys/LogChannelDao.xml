@@ -27,8 +27,7 @@
             and createdAt between #{beginTime} and #{endTime}
         </if>
         <if test="id !=null and id != ''">
-            and channel in (SELECT channelCode FROM channel_manage WHERE id IN (SELECT channel FROM log_channel WHERE id
-            = #{id}))
+            and channel in (SELECT channelCode FROM channel_manage WHERE id IN (SELECT channel FROM log_channel WHERE id = #{id}))
         </if>
         ) AS t) AS loanUvNum
         from log_channel t1
@@ -75,8 +74,7 @@
         GROUP BY deviceId,
         mobile,
         loanId,
-        channel,
-        ip) AS t
+        channel) AS t
         WHERE channel =
         (SELECT
         channelCode
