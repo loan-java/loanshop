@@ -83,19 +83,7 @@ public class ChannelManageController {
         channelManage.setUpdatedat(new Date());
         switch (appProperties.getApp()) {
             case 1:
-                channelManage.setChannelurl(String.format("%s%s", "https://mxfq.jiyawangluo.com/#/channel-login?channelCode=", channelManage.getChannelcode()));
-                break;
-            case 2:
-                channelManage.setChannelurl(String.format("%s%s", "https://mxfq.jiyawangluo.com/#/channel-login?channelCode=", channelManage.getChannelcode()));
-                break;
-            case 3:
-                channelManage.setChannelurl(String.format("%s%s", "http://bee.fenghuolunb.com/#/channel-login?channelCode=", channelManage.getChannelcode()));
-                break;
-            case 4:
-                channelManage.setChannelurl(String.format("%s%s", "http://mdxy.midouxy.com:81/#/channel-login?channelCode=", channelManage.getChannelcode()));
-                break;
-            case 5:
-                channelManage.setChannelurl(String.format("%s%s", "http://121.40.245.243/#/channel-login?channelCode=", channelManage.getChannelcode()));
+                channelManage.setChannelurl(String.format("%s%s", "http://h5.whwen.cn/#/channel-login?channelCode=", channelManage.getChannelcode()));
                 break;
         }
         channelManageService.save(channelManage);
@@ -112,19 +100,7 @@ public class ChannelManageController {
         ValidatorUtils.validateEntity(channelManage);
         switch (appProperties.getApp()) {
             case 1:
-                channelManage.setChannelurl(String.format("%s%s", "https://mxfq.jiyawangluo.com/#/channel-login?channelCode=", channelManage.getChannelcode()));
-                break;
-            case 2:
-                channelManage.setChannelurl(String.format("%s%s", "https://mxfq.jiyawangluo.com/#/channel-login?channelCode=", channelManage.getChannelcode()));
-                break;
-            case 3:
-                channelManage.setChannelurl(String.format("%s%s", "http://bee.fenghuolunb.com/#/channel-login?channelCode=", channelManage.getChannelcode()));
-                break;
-            case 4:
-                channelManage.setChannelurl(String.format("%s%s", "http://mdxy.midouxy.com:81/#/channel-login?channelCode=", channelManage.getChannelcode()));
-                break;
-            case 5:
-                channelManage.setChannelurl(String.format("%s%s", "http://121.40.245.243/#/channel-login?channelCode=", channelManage.getChannelcode()));
+                channelManage.setChannelurl(String.format("%s%s", "http://h5.whwen.cn/#/channel-login?channelCode=", channelManage.getChannelcode()));
                 break;
         }
         channelManageService.updateById(channelManage);

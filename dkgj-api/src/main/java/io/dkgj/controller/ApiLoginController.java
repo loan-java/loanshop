@@ -134,70 +134,15 @@ public class ApiLoginController {
 
             switch (app) {
                 case 1:
-                    if (StringUtils.isNotBlank(chCode)) {
-                        if (chCode.toUpperCase().equals("XLH")) {
-                            json = Sms2Utils.sendQdzSms(mobile, chName, String.valueOf(code));
-                        } else if (chCode.toUpperCase().equals("MHFQ")) {
-                            json = Sms3Utils.sendQdzSms(mobile, chName, String.valueOf(code));
-                        } if (chCode.toUpperCase().equals("MDXY")){
-                            SmsUtils.sendMdxXinYunSms(mobile,chName,String.valueOf(code));
-                        } else {
-                            json = SmsUtils.sendQdzSms(mobile, chName, String.valueOf(code));
-                        }
-                    } else {
-                        json = SmsUtils.sendQdzSms(mobile, chName, String.valueOf(code));
-                    }
-
+                    json = SmsUtils.sendXunbdSms(appProperties.getAccesskey(), appProperties.getAccessSecret(),
+                            appProperties.getSign(), mobile, String.valueOf(code));
                     String key = String.format("%s%s", RedisKeyConfig.LOGIN_KEY, mobile);
-                    //短信验证码第三方
-                    redisUtils.set(key, code);
-                    if (chCode.toUpperCase().equals("MDXY")){
-                        if ("000000".equals(json.getString("errorCode"))) {
-                            return R.ok();
-                        } else {
-                            return R.error(json.getString("errorMsg"));
-                        }
-                    }else {
-                        if ("0".equals(json.getString("code"))) {
-                            return R.ok();
-                        } else {
-                            return R.error(json.getString("msg"));
-                        }
-                    }
-                case 2:
-                    if ("秒花呗".equals(chName)) {
-                        json = SmsDkmUtils.sendQdzSms(mobile, chName, code);
-                    } else {
-                        json = SmsDkmUtils.sendQdzSms(mobile, chName, code);
-                    }
-                    key = String.format("%s%s", RedisKeyConfig.LOGIN_KEY, mobile);
-
-                    //短信验证码第三方
-                    redisUtils.set(key, code);
-                    if ("0".equals(json.getString("code"))) {
-                        return R.ok();
-                    } else {
-                        return R.error(json.getString("msg"));
-                    }
-                case 3:
-                    json = SmsUtils.sendBeeSms(mobile, chName, String.valueOf(code));
-                    key = String.format("%s%s", RedisKeyConfig.LOGIN_KEY, mobile);
                     //短信验证码第三方
                     redisUtils.set(key, code);
                     if ("0".equals(json.getString("code"))) {
                         return R.ok();
                     } else {
                         return R.error(json.getString("message"));
-                    }
-                case 4:
-                    json = SmsUtils.sendMdxXinYunSms(mobile, chName, String.valueOf(code));
-                    key = String.format("%s%s", RedisKeyConfig.LOGIN_KEY, mobile);
-                    //短信验证码第三方
-                    redisUtils.set(key, code);
-                    if ("000000".equals(json.getString("errorCode"))) {
-                        return R.ok();
-                    } else {
-                        return R.error(json.getString("errorMsg"));
                     }
                 default:
                     json = SmsUtils.sendXunbdSms(appProperties.getAccesskey(), appProperties.getAccessSecret(),
