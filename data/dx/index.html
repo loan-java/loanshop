@@ -145,7 +145,7 @@
     </div>
     <div class="download-btn">下载安装</div>
     <span class="build">(Version 1.0.0)-9.8 MB</span>
-    <span class="update">更新于：2019-08-30 0:37</span>
+    <span class="update">更新于：2020-03-02 0:37</span>
     <div  class="qr" id="qrcode"></div>
     <div class="link-ctn mid">
         <span class="link">http://bee.fenghuolunb.com/</span>
@@ -219,10 +219,10 @@
     }
     jQuery('#qrcode').qrcode({
         render: "canvas", //也可以替换为table
-        text:"http://121.40.245.243/dx?channelCode="+channelCode
+        text:"http://download.whwen.cn/?channelCode="+channelCode
     });
 
-    $('.link').html('http://121.40.245.243/dx?channelCode='+channelCode);
+    $('.link').html('http://download.whwen.cn/?channelCode='+channelCode);
 
     if (isIos) {
         browser.innerHTML = 'safari';
@@ -238,7 +238,7 @@
         //window.open(downloadLink);
         var data = {"channel":channelCode};
         $.ajax({
-                url : "http://121.40.245.243:8016/ycqb-api/api/traceChannelDownNum",
+                url : "http://api.whwen.cn/ycqb-api/api/traceChannelDownNum",
                 async : false,
                 type : "POST",
                 contentType : 'application/json',
@@ -256,7 +256,7 @@
     copy.addEventListener('click', function () {
         const input = document.createElement('input');
         document.body.appendChild(input);
-        input.setAttribute('value', 'http://121.40.245.243/dx/'+channelCode+'/');
+        input.setAttribute('value', 'http://download.whwen.cn/?channelCode='+channelCode);
         input.select();
         if (document.execCommand('copy')) {
             document.execCommand('copy');
