@@ -167,8 +167,38 @@ public class SmsUtils {
         return responseJSON;
     }
 
+    /**
+     * MO信通平台
+     * @param username
+     * @param pwd
+     * @param chName
+     * @param mobile
+     * @param code
+     * @return
+     * @throws Exception
+     */
+    public static JSONObject sendMOSms(String username, String pwd, String chName, String mobile, String code) throws Exception {
+        String url = "https://api.uoleem.com.cn/sms/httpBatchSend/";// 应用地址
+        HttpClient httpClient = new HttpClient();
+        PostMethod postMethod = new PostMethod(url);
+        postMethod.getParams().setContentCharset("UTF-8");
+        postMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler());
+
+        String content = "【"+chName+"】验证码：" + code + "。如不是本人操作，请忽略此信息。" ;
+
+        postMethod.setParameter("username", username);
+        postMethod.setParameter("pwd", pwd);
+        postMethod.setParameter("content", content);
+        postMethod.setParameter("mobile", mobile);
+
+        int statusCode = httpClient.executeMethod(postMethod);
+        System.out.println("statusCode: " + statusCode + ", body: " + postMethod.getResponseBodyAsString());
+        JSONObject responseJSON = JSONObject.parseObject(postMethod.getResponseBodyAsString());
+        return responseJSON;
+    }
+
 
     public static void main(String[] args) throws Exception {
-        SmsUtils.sendMdxXinYunSms("18296134271","米豆信用", "123457");
+        SmsUtils.sendMOSms("httz001","4dae6489da13cc5285058c9124346ef0", "易财钱包", "15260282340", "12345");
     }
 }

@@ -134,8 +134,7 @@ public class ApiLoginController {
 
             switch (app) {
                 case 1:
-                    json = SmsUtils.sendXunbdSms(appProperties.getAccesskey(), appProperties.getAccessSecret(),
-                            appProperties.getSign(), mobile, String.valueOf(code));
+                    json = SmsUtils.sendMOSms(appProperties.getMoUsername(), appProperties.getMoPwd(), appProperties.getMoSign(), mobile, String.valueOf(code));
                     String key = String.format("%s%s", RedisKeyConfig.LOGIN_KEY, mobile);
                     //短信验证码第三方
                     redisUtils.set(key, code);
@@ -145,8 +144,7 @@ public class ApiLoginController {
                         return R.error(json.getString("message"));
                     }
                 default:
-                    json = SmsUtils.sendXunbdSms(appProperties.getAccesskey(), appProperties.getAccessSecret(),
-                            appProperties.getSign(), mobile, String.valueOf(code));
+                    json = SmsUtils.sendMOSms(appProperties.getMoUsername(), appProperties.getMoPwd(), appProperties.getMoSign(), mobile, String.valueOf(code));
                     key = String.format("%s%s", RedisKeyConfig.LOGIN_KEY, mobile);
                     //短信验证码第三方
                     redisUtils.set(key, code);
