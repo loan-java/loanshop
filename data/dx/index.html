@@ -226,11 +226,11 @@
 
     if (isIos) {
         browser.innerHTML = 'safari';
-        downloadLink = 'itms-services://?action=download-manifest&url=https://market-oss.oss-cn-hangzhou.aliyuncs.com/app/ios/rhh.plist';
+        downloadLink = 'itms-services://?action=download-manifest&url=https://market-oss.oss-cn-hangzhou.aliyuncs.com/app/ios/ycqb.plist';
     }else{
         platformImg.src = 'img/icon-android.png';
         platformImg.style.height = '4vw';
-        downloadLink = 'https://market-oss.oss-cn-hangzhou.aliyuncs.com/app/android/rhh.apk';
+        downloadLink = 'https://market-oss.oss-cn-hangzhou.aliyuncs.com/app/android/ycqb.apk';
     }
 
     download.addEventListener('click', function () {
@@ -238,7 +238,7 @@
         //window.open(downloadLink);
         var data = {"channel":channelCode};
         $.ajax({
-                url : "http://121.40.245.243:8016/rhh-api/api/traceChannelDownNum",
+                url : "http://121.40.245.243:8016/ycqb-api/api/traceChannelDownNum",
                 async : false,
                 type : "POST",
                 contentType : 'application/json',
