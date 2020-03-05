@@ -71,10 +71,7 @@
         <if test="beginDate != null and endDate != null">
             AND createdAt BETWEEN #{beginDate} AND #{endDate}
         </if>
-        GROUP BY deviceId,
-        mobile,
-        loanId,
-        channel) AS t
+        ) AS t
         WHERE channel =
         (SELECT
         channelCode
@@ -86,13 +83,13 @@
         log_channel t1
         left join channel_manage t2 on t1.channel = t2.id
         left join (
-        SELECT COUNT(1) as channelRegNum,wx_id FROM USER
+        SELECT COUNT(1) as channelRegNum,uu.wx_id FROM USER uu
         <where>
             <if test="beginDate != null and endDate != null">
-                created_at BETWEEN #{beginDate} AND #{endDate}
+                uu.created_at BETWEEN #{beginDate} AND #{endDate}
             </if>
         </where>
-        GROUP BY wx_id
+        GROUP BY uu.wx_id
         ) t3 on t2.channelCode = t3.wx_id
         WHERE 1 = 1
         <if test="beginDate != null and endDate != null">

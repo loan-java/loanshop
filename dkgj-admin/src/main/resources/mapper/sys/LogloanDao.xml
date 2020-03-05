@@ -44,7 +44,7 @@
         <if test="relId !=null and relId != ''">
             and loanId in (select id from loan WHERE title like CONCAT(CONCAT('%',#{relId},'%')))
         </if>
-        GROUP BY loanId ) as tmp )as t2 on t2.loanId = t1.relId
+        ) as tmp GROUP BY loanId )as t2 on t2.loanId = t1.relId
         where 1 = 1
 
         <if test="id !=null and id != ''">
@@ -60,7 +60,7 @@
             and t1.createdAt between #{beginTime} and #{endTime}
         </if>
 
-        GROUP BY relId
+        GROUP BY t1.id
     </select>
 
     <select id="selectSum" resultType="java.util.HashMap" parameterType="map">
