@@ -74,7 +74,7 @@ CREATE TABLE `banner` (
   `updatedAt` datetime DEFAULT NULL,
   `deletedAt` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS  `channel_manage`;
 CREATE TABLE `channel_manage` (
@@ -95,7 +95,7 @@ CREATE TABLE `channel_manage` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `channelCode` (`channelCode`),
   UNIQUE KEY `channel_manage_channelCode_unique` (`channelCode`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS  `history_log_channel`;
 CREATE TABLE `history_log_channel` (
@@ -172,6 +172,7 @@ CREATE TABLE `loan` (
   `manageaccount` varchar(32) DEFAULT NULL,
   `managepassword` varchar(32) DEFAULT NULL,
   `market` varchar(32) DEFAULT NULL,
+  `maxuv` varchar(32) DEFAULT NULL,
   `position` int(11) DEFAULT NULL,
   `big_type_position` int(11) DEFAULT NULL,
   `big_type` int(11) DEFAULT NULL,
@@ -182,7 +183,7 @@ CREATE TABLE `loan` (
   `unit_price` varchar(45) DEFAULT NULL,
   `conversion` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS  `loan_banner`;
 CREATE TABLE `loan_banner` (
@@ -208,7 +209,7 @@ CREATE TABLE `log_app_login` (
   `createDat` datetime DEFAULT NULL,
   `updateDat` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS  `log_aso`;
 CREATE TABLE `log_aso` (
@@ -224,7 +225,7 @@ CREATE TABLE `log_aso` (
   `update_date` datetime DEFAULT NULL,
   `status` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS  `log_channel`;
 CREATE TABLE `log_channel` (
@@ -239,7 +240,7 @@ CREATE TABLE `log_channel` (
   `clickdownnum` int(11) DEFAULT NULL,
   `uv_num` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS  `log_channel_today_vist`;
 CREATE TABLE `log_channel_today_vist` (
@@ -250,7 +251,7 @@ CREATE TABLE `log_channel_today_vist` (
   `create_date` datetime DEFAULT NULL,
   `update_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS  `log_channel_visit`;
 CREATE TABLE `log_channel_visit` (
@@ -261,7 +262,7 @@ CREATE TABLE `log_channel_visit` (
   `updatedAt` datetime DEFAULT NULL,
   `deletedAt` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=180 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS  `log_loan_vist`;
 CREATE TABLE `log_loan_vist` (
@@ -273,7 +274,7 @@ CREATE TABLE `log_loan_vist` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS  `log_visit`;
 CREATE TABLE `log_visit` (
@@ -288,7 +289,7 @@ CREATE TABLE `log_visit` (
   `updatedAt` datetime NOT NULL,
   `deletedAt` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS  `log_visit_source`;
 CREATE TABLE `log_visit_source` (
@@ -332,7 +333,7 @@ CREATE TABLE `logloan` (
   `updatedAt` datetime NOT NULL,
   `deletedAt` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS  `logroute`;
 CREATE TABLE `logroute` (
@@ -399,7 +400,7 @@ CREATE TABLE `m_log_device` (
   `createdAt` datetime NOT NULL,
   `deletedAt` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS  `m_user_app_account`;
 CREATE TABLE `m_user_app_account` (
@@ -592,7 +593,7 @@ CREATE TABLE `schedule_job` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`job_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='定时任务';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='定时任务';
 
 DROP TABLE IF EXISTS  `schedule_job_log`;
 CREATE TABLE `schedule_job_log` (
@@ -617,7 +618,7 @@ CREATE TABLE `sys_config` (
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`),
   UNIQUE KEY `param_key` (`param_key`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='系统配置信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='系统配置信息表';
 
 DROP TABLE IF EXISTS  `sys_dept`;
 CREATE TABLE `sys_dept` (
@@ -627,7 +628,7 @@ CREATE TABLE `sys_dept` (
   `order_num` int(11) DEFAULT NULL COMMENT '排序',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`dept_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='部门管理';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='部门管理';
 
 DROP TABLE IF EXISTS  `sys_dict`;
 CREATE TABLE `sys_dict` (
@@ -641,7 +642,7 @@ CREATE TABLE `sys_dict` (
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '删除标记  -1：已删除  0：正常',
   PRIMARY KEY (`id`),
   UNIQUE KEY `type` (`type`,`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='数据字典表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='数据字典表';
 
 DROP TABLE IF EXISTS  `sys_log`;
 CREATE TABLE `sys_log` (
@@ -654,7 +655,7 @@ CREATE TABLE `sys_log` (
   `ip` varchar(64) DEFAULT NULL COMMENT 'IP地址',
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='系统日志';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='系统日志';
 
 DROP TABLE IF EXISTS  `sys_menu`;
 CREATE TABLE `sys_menu` (
@@ -667,7 +668,7 @@ CREATE TABLE `sys_menu` (
   `icon` varchar(50) DEFAULT NULL COMMENT '菜单图标',
   `order_num` int(11) DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8 COMMENT='菜单管理';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='菜单管理';
 
 DROP TABLE IF EXISTS  `sys_oss`;
 CREATE TABLE `sys_oss` (
@@ -675,7 +676,7 @@ CREATE TABLE `sys_oss` (
   `url` varchar(200) DEFAULT NULL COMMENT 'URL地址',
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='文件上传';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='文件上传';
 
 DROP TABLE IF EXISTS  `sys_role`;
 CREATE TABLE `sys_role` (
@@ -686,7 +687,7 @@ CREATE TABLE `sys_role` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `channel_id` bigint(20) DEFAULT NULL COMMENT '渠道ID',
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='角色';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='角色';
 
 DROP TABLE IF EXISTS  `sys_role_dept`;
 CREATE TABLE `sys_role_dept` (
@@ -702,7 +703,7 @@ CREATE TABLE `sys_role_menu` (
   `role_id` bigint(20) DEFAULT NULL COMMENT '角色ID',
   `menu_id` bigint(20) DEFAULT NULL COMMENT '菜单ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='角色与菜单对应关系';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='角色与菜单对应关系';
 
 DROP TABLE IF EXISTS  `sys_user`;
 CREATE TABLE `sys_user` (
@@ -719,7 +720,7 @@ CREATE TABLE `sys_user` (
   `loan_ids` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='系统用户';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='系统用户';
 
 DROP TABLE IF EXISTS  `sys_user_role`;
 CREATE TABLE `sys_user_role` (
@@ -727,7 +728,7 @@ CREATE TABLE `sys_user_role` (
   `user_id` bigint(20) DEFAULT NULL COMMENT '用户ID',
   `role_id` bigint(20) DEFAULT NULL COMMENT '角色ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='用户与角色对应关系';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='用户与角色对应关系';
 
 DROP TABLE IF EXISTS  `t_note`;
 CREATE TABLE `t_note` (
@@ -788,7 +789,7 @@ CREATE TABLE `user` (
   `updatedAt` datetime DEFAULT NULL,
   `deletedAt` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS  `userapp`;
 CREATE TABLE `userapp` (

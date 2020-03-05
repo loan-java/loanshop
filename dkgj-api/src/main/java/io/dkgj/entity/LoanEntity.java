@@ -102,7 +102,6 @@ public class LoanEntity implements Serializable {
 
 	private Integer type;
 
-	@TableField(exist = false)
 	private String maxuv;
 
 }

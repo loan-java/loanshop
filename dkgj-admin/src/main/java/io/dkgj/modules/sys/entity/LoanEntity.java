@@ -124,6 +124,5 @@ public class LoanEntity implements Serializable {
 
     private String market;
 
-    @TableField(exist = false)
     private String maxuv;
 }
