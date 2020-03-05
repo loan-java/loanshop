@@ -87,7 +87,11 @@
         left join channel_manage t2 on t1.channel = t2.id
         left join (
         SELECT COUNT(1) as channelRegNum,wx_id FROM USER
-        WHERE created_at BETWEEN #{beginDate} AND #{endDate}
+        <where>
+            <if test="beginDate != null and endDate != null">
+                created_at BETWEEN #{beginDate} AND #{endDate}
+            </if>
+        </where>
         GROUP BY wx_id
         ) t3 on t2.channelCode = t3.wx_id
         WHERE 1 = 1
