@@ -42,7 +42,7 @@
             and createDat between #{beginTime} and #{endTime}
         </if>
         <if test="relId !=null and relId != ''">
-            and loanId in (select id from loan WHERE title like CONCAT(CONCAT('%',#{relId},'%')))
+            and loanId = #{relId}
         </if>
         ) as tmp GROUP BY loanId )as t2 on t2.loanId = t1.relId
         where 1 = 1
@@ -51,7 +51,7 @@
             and t1.id = #{id}
         </if>
         <if test="relId !=null and relId != ''">
-            and t1.relId in (select id from loan WHERE title like CONCAT(CONCAT('%',#{relId},'%')))
+            and t1.relId = #{relId}
         </if>
         <if test="refer !=null and refer != ''">
             and t1.refer = #{refer}
