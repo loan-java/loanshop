@@ -103,7 +103,7 @@ public class AdminLogChannelController {
                     && entity.getUvNum() > 0
                     && null != entity.getChannelRegNum()
             ) {
-                entity.setUvzcl(new BigDecimal(entity.getChannelRegNum() / (float) entity.getUvNum() * 100).setScale(2) + "%");
+                entity.setUvzcl(new BigDecimal(entity.getChannelRegNum() / entity.getUvNum() * 100).setScale(2) + "%");
             }
 
             data.add(entity);
