@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -103,7 +104,8 @@ public class AdminLogChannelController {
                     && entity.getUvNum() > 0
                     && null != entity.getChannelRegNum()
             ) {
-                entity.setUvzcl(new BigDecimal(entity.getChannelRegNum() / entity.getUvNum() * 100).setScale(2) + "%");
+                DecimalFormat df = new DecimalFormat("0.00");//设置保留位数
+                entity.setUvzcl(df.format((float) (entity.getChannelRegNum() / entity.getUvNum()) * 100) + "%");
             }
 
             data.add(entity);
@@ -151,5 +153,6 @@ public class AdminLogChannelController {
 
         return R.ok().put("page", page);
     }
+
 
 }
