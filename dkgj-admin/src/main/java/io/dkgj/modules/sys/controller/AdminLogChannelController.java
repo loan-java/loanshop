@@ -105,7 +105,7 @@ public class AdminLogChannelController {
                     && null != entity.getChannelRegNum()
             ) {
                 DecimalFormat df = new DecimalFormat("0.00");//设置保留位数
-                entity.setUvzcl(df.format((float) (entity.getChannelRegNum() / entity.getUvNum()) * 100) + "%");
+                entity.setUvzcl(df.format(((float) entity.getChannelRegNum() / entity.getUvNum()) * 100) + "%");
             }
 
             data.add(entity);
@@ -153,6 +153,5 @@ public class AdminLogChannelController {
 
         return R.ok().put("page", page);
     }
-
 
 }
