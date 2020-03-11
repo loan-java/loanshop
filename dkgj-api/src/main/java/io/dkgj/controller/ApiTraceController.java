@@ -9,10 +9,6 @@ import io.dkgj.common.utils.R;
 import io.dkgj.common.validator.ValidatorUtils;
 import io.dkgj.entity.*;
 import io.dkgj.form.*;
-import io.dkgj.entity.MLogDeviceEntity;
-import io.dkgj.entity.UserEntity;
-import io.dkgj.service.MLogDeviceService;
-import io.dkgj.service.UserService;
 import io.dkgj.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -236,7 +232,7 @@ public class ApiTraceController {
     public R traceChannel(@RequestBody LogChannelForm form, HttpServletRequest request) {
         if (StringUtils.isNotBlank(form.getChannel())) {
             String ip = IPUtils.getIpAddr(request);
-            log.error("渠道点击埋点查询到的ip为：" + ip);
+            log.info("渠道点击埋点查询到的ip为：" + ip);
             LogChannelVisitEntity logChannelVisitEntity = queryTodayRecord(form, ip);
             Boolean uvFlag = false;
             if (logChannelVisitEntity == null) {
@@ -313,6 +309,7 @@ public class ApiTraceController {
     @ApiOperation("设备埋点")
     public R traceMdevice(@RequestBody MLogDeviceForm form) {
         MLogDeviceEntity mLogDeviceEntity = queryByUUID(form.getUuid());
+        log.info("设备埋点,设备:{}", form.getUuid());
         if (mLogDeviceEntity == null) {
             mLogDeviceEntity = new MLogDeviceEntity();
             mLogDeviceEntity.setAppid(1);
@@ -332,6 +329,7 @@ public class ApiTraceController {
         ChannelManageEntity channelManageEntity = channelManageService.getOne(new QueryWrapper<ChannelManageEntity>()
                 .eq("channelCode", form.getChannel()));
         LogChannelEntity entity = new LogChannelEntity();
+        log.info("渠道APP打开数据埋点,打开渠道:{}", form.getChannel());
 
         if (channelManageEntity != null) {
             entity.setChannel(String.valueOf(channelManageEntity.getId()));
@@ -342,7 +340,7 @@ public class ApiTraceController {
 
         LogChannelEntity tmp = queryTodayLogChannel(channelManageEntity);
 
-
+        log.info("渠道APP打开数据埋点,历史信息:{}", JSONObject.toJSONString(tmp));
         if (tmp == null) {
             entity.setCreatedat(new Date());
             entity.setUpdatedat(new Date());
@@ -365,7 +363,7 @@ public class ApiTraceController {
         ChannelManageEntity channelManageEntity = channelManageService.getOne(new QueryWrapper<ChannelManageEntity>()
                 .eq("channelCode", form.getChannel()));
         LogChannelEntity entity = new LogChannelEntity();
-
+        log.info("渠道下载数据埋点,下载渠道:{}", form.getChannel());
         if (channelManageEntity != null) {
             entity.setChannel(String.valueOf(channelManageEntity.getId()));
         } else {
@@ -375,7 +373,7 @@ public class ApiTraceController {
 
         LogChannelEntity tmp = queryTodayLogChannel(channelManageEntity);
 
-
+        log.info("渠道下载数据埋点,历史信息:{}", JSONObject.toJSONString(tmp));
         if (tmp == null) {
             entity.setCreatedat(new Date());
             entity.setUpdatedat(new Date());
@@ -394,6 +392,7 @@ public class ApiTraceController {
     @PostMapping("traceReferer")
     @ApiOperation("注册来源检测接口")
     public R traceReferer(@RequestBody LogVisitSourceForm form) {
+        log.info("注册来源检测接口");
         ValidatorUtils.validateEntity(form);
         LogVisitSourceEntity entity = new LogVisitSourceEntity();
         BeanUtils.copyProperties(form, entity);
@@ -406,6 +405,7 @@ public class ApiTraceController {
     @ApiOperation("app登录埋点")
     @Login
     public R traceAppLogin(@ApiIgnore @RequestAttribute("userId") Integer userId, @RequestBody LogAppLoginForm form) {
+        log.info("app登录埋点{}", userId);
         ValidatorUtils.validateEntity(form);
         LogAppLoginEntity entity = new LogAppLoginEntity();
         BeanUtils.copyProperties(form, entity);
