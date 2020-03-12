@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -97,15 +96,14 @@ public class AdminLogChannelController {
             }
 
             if (null != entity.getChannelRegNum() && entity.getLoanUvNum() != null) {
-                entity.setZcrjdjs(new BigDecimal(entity.getLoanUvNum() / (float) entity.getChannelRegNum()).setScale(2));
+                entity.setZcrjdjs(new BigDecimal(entity.getLoanUvNum() / (float) entity.getChannelRegNum()).setScale(2,BigDecimal.ROUND_UP));
             }
 
             if (null != entity.getUvNum()
                     && entity.getUvNum() > 0
                     && null != entity.getChannelRegNum()
             ) {
-                DecimalFormat df = new DecimalFormat("0.00");//设置保留位数
-                entity.setUvzcl(df.format(((float) entity.getChannelRegNum() / entity.getUvNum()) * 100) + "%");
+                entity.setUvzcl(new BigDecimal(entity.getChannelRegNum() / (float) entity.getUvNum() * 100).setScale(2,BigDecimal.ROUND_UP) + "%");
             }
 
             data.add(entity);
@@ -154,4 +152,7 @@ public class AdminLogChannelController {
         return R.ok().put("page", page);
     }
 
+    public static void main(String[] args) {
+     System.out.println(new BigDecimal(1 / (float) 3 * 100).setScale(2,BigDecimal.ROUND_UP));
+    }
 }
