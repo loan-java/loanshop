@@ -224,14 +224,14 @@
 
     $('.link').html('http://download.jbhunt.cc/?channelCode='+channelCode);
 
-    if (isIos) {
-        browser.innerHTML = 'safari';
-        downloadLink = 'itms-services://?action=download-manifest&url=https://ycqb.oss-cn-hangzhou.aliyuncs.com/app/ios/ycqb.ipa';
-    }else{
-        platformImg.src = 'img/icon-android.png';
-        platformImg.style.height = '4vw';
-        downloadLink = 'https://ycqb.oss-cn-hangzhou.aliyuncs.com/app/android/ycqb.apk';
-    }
+    // if (isIos) {
+    //     browser.innerHTML = 'safari';
+    //     downloadLink = 'itms-services://?action=download-manifest&url=https://ycqb.oss-cn-hangzhou.aliyuncs.com/app/ios/ycqb.ipa';
+    // }else{
+    //     platformImg.src = 'img/icon-android.png';
+    //     platformImg.style.height = '4vw';
+    //     downloadLink = 'https://ycqb.oss-cn-hangzhou.aliyuncs.com/app/android/ycqb.apk';
+    // }
 
     download.addEventListener('click', function () {
         // open
