@@ -9,6 +9,7 @@ import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.lang.StringUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -97,7 +98,6 @@ public class SmsUtils {
     }
 
 
-
     /**
      * 米豆信用短信(信云短信)
      *
@@ -122,9 +122,9 @@ public class SmsUtils {
         NameValuePair[] data = {
                 new NameValuePair("appKey", accesskey),
                 new NameValuePair("appSecret", accessSecret),
-                new NameValuePair("content", "【" + chName + "】"+"你的验证码为："+code+"请不要把验证码泄露给其他人！ 10分钟内有效"),
+                new NameValuePair("content", "【" + chName + "】" + "你的验证码为：" + code + "请不要把验证码泄露给其他人！ 10分钟内有效"),
                 new NameValuePair("phones", mobile),
-                new NameValuePair("batchNum", "kjzhou01"+new SimpleDateFormat("YYYYMMdd").format(new Date()) + (int)(Math.random()*1000000))
+                new NameValuePair("batchNum", "kjzhou01" + new SimpleDateFormat("YYYYMMdd").format(new Date()) + (int) (Math.random() * 1000000))
         };
         postMethod.setRequestBody(data);
 
@@ -169,6 +169,7 @@ public class SmsUtils {
 
     /**
      * MO信通平台
+     *
      * @param username
      * @param pwd
      * @param chName
@@ -184,21 +185,23 @@ public class SmsUtils {
         postMethod.getParams().setContentCharset("UTF-8");
         postMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler());
 
-        String content = "【"+chName+"】验证码：" + code + "。如不是本人操作，请忽略此信息。" ;
+        String content = "【" + chName + "】验证码：" + code + "。如不是本人操作，请忽略此信息。";
 
         postMethod.setParameter("username", username);
         postMethod.setParameter("pwd", pwd);
         postMethod.setParameter("content", content);
         postMethod.setParameter("mobile", mobile);
-
-        int statusCode = httpClient.executeMethod(postMethod);
-        System.out.println("statusCode: " + statusCode + ", body: " + postMethod.getResponseBodyAsString());
+        int statusCode = 0;
+        while (statusCode != 200) {
+            statusCode = httpClient.executeMethod(postMethod);
+        }
+        log.info("statusCode: " + statusCode + ", body: " + postMethod.getResponseBodyAsString());
         JSONObject responseJSON = JSONObject.parseObject(postMethod.getResponseBodyAsString());
         return responseJSON;
     }
 
 
     public static void main(String[] args) throws Exception {
-        SmsUtils.sendMOSms("httz001","4dae6489da13cc5285058c9124346ef0", "易财钱包", "15868417851", "123123");
+        SmsUtils.sendMOSms("httz001", "4dae6489da13cc5285058c9124346ef0", "易财钱包", "15868417851", "123123");
     }
 }
