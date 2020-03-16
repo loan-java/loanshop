@@ -67,7 +67,6 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         TokenEntity tokenEntity = tokenService.queryByToken(token);
         log.info("token是{},搜索到的token是{}", token, JSONObject.toJSONString(tokenEntity));
         if (tokenEntity == null || tokenEntity.getExpireTime().getTime() < new Date().getTime()) {
-            log.info("token过期时间{},当前系统时间{}", tokenEntity.getExpireTime().getTime(), System.currentTimeMillis());
             throw new RRException("token失效，请重新登录");
         }
 
