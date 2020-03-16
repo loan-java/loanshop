@@ -135,22 +135,30 @@ public class ApiLoginController {
             switch (app) {
                 case 1:
                     while (json == null || !"0".equals(json.getString("code"))) {
-                        json = SmsUtils.sendMOSms(appProperties.getAccesskey(), appProperties.getAccessSecret(), appProperties.getSign(), mobile, String.valueOf(code));
-                        String key = String.format("%s%s", RedisKeyConfig.LOGIN_KEY, mobile);
-                        //短信验证码第三方
-                        redisUtils.set(key, code);
-                        if ("0".equals(json.getString("code"))) {
-                            return R.ok();
+                        try {
+                            json = SmsUtils.sendMOSms(appProperties.getAccesskey(), appProperties.getAccessSecret(), appProperties.getSign(), mobile, String.valueOf(code));
+                            String key = String.format("%s%s", RedisKeyConfig.LOGIN_KEY, mobile);
+                            //短信验证码第三方
+                            redisUtils.set(key, code);
+                            if ("0".equals(json.getString("code"))) {
+                                return R.ok();
+                            }
+                        } catch (Exception e) {
+                            return R.error("网络错误，请重试!");
                         }
                     }
                 default:
                     while (json == null || !"0".equals(json.getString("code"))) {
-                        json = SmsUtils.sendMOSms(appProperties.getAccesskey(), appProperties.getAccessSecret(), appProperties.getSign(), mobile, String.valueOf(code));
-                        String key = String.format("%s%s", RedisKeyConfig.LOGIN_KEY, mobile);
-                        //短信验证码第三方
-                        redisUtils.set(key, code);
-                        if ("0".equals(json.getString("code"))) {
-                            return R.ok();
+                        try {
+                            json = SmsUtils.sendMOSms(appProperties.getAccesskey(), appProperties.getAccessSecret(), appProperties.getSign(), mobile, String.valueOf(code));
+                            String key = String.format("%s%s", RedisKeyConfig.LOGIN_KEY, mobile);
+                            //短信验证码第三方
+                            redisUtils.set(key, code);
+                            if ("0".equals(json.getString("code"))) {
+                                return R.ok();
+                            }
+                        } catch (Exception e) {
+                            return R.error("网络错误，请重试!");
                         }
                     }
             }
