@@ -23,6 +23,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 /**
  * 权限(Token)验证
@@ -65,7 +66,8 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         //查询token信息
         TokenEntity tokenEntity = tokenService.queryByToken(token);
         log.info("token是{},搜索到的token是{}", token, JSONObject.toJSONString(tokenEntity));
-        if (tokenEntity == null || tokenEntity.getExpireTime().getTime() < System.currentTimeMillis()) {
+        if (tokenEntity == null || tokenEntity.getExpireTime().getTime() < new Date().getTime()) {
+            log.info("token过期时间{},当前系统时间{}", tokenEntity.getExpireTime().getTime(), System.currentTimeMillis());
             throw new RRException("token失效，请重新登录");
         }
 
@@ -73,5 +75,9 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         request.setAttribute(USER_KEY, tokenEntity.getUserId());
 
         return true;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(System.currentTimeMillis());
     }
 }
