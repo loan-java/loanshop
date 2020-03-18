@@ -18,9 +18,9 @@ public class AllowOriginFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) {
         HttpServletResponse response = (HttpServletResponse) res;
         response.setHeader("Access-Control-Allow-Origin", "*");//* 表示该资源谁都可以用,从而实现跨域
-        response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Allow-Methods", "*");
         response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with, Content-Type, token");
+        response.setHeader("Access-Control-Allow-Headers", "*");
         HttpServletRequest request = (HttpServletRequest) req;
 
         try {
