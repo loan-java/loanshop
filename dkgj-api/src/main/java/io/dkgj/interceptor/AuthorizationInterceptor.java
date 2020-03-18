@@ -50,6 +50,10 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         if (annotation == null) {
             return true;
         }
+        if (request.getMethod().equals("OPTIONS")) {
+            response.setStatus(HttpServletResponse.SC_OK);
+            return true;
+        }
 
         //从header中获取token
         String token = request.getHeader("token");
