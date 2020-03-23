@@ -7,12 +7,14 @@ insert into `app_switch`(`id`,`app_package_name`,`type`,`version`,`status`,`crea
 insert into `schedule_job`(`job_id`,`bean_name`,`params`,`cron_expression`,`status`,`remark`,`create_time`) values
 (4,'channelDataCopyTask',null,'0 0 0 * * ?',0,'历史数据落盘任务	',null);
 
-insert into `sys_config`(`id`,`param_key`,`param_value`,`status`,`remark`) values
-(1,'CLOUD_STORAGE_CONFIG_KEY','{"type":2,"aliyunDomain":"","aliyunEndPoint":"","aliyunAccessKeyId":"","aliyunAccessKeySecret":"","aliyunBucketName":""}',0,'云存储配置信息');
+INSERT INTO `sys_config` (`id`, `param_key`, `param_value`, `status`, `remark`)
+VALUES
+	(1, 'CLOUD_STORAGE_CONFIG_KEY', '{\"type\":2,\"aliyunDomain\":\"http://ycqb.oss-cn-hangzhou.aliyuncs.com\",\"aliyunEndPoint\":\"http://oss-cn-hangzhou.aliyuncs.com\",\"aliyunAccessKeyId\":\"LTAI4Fx9mMYxsUz6tWUcB3k9\",\"aliyunAccessKeySecret\":\"D1RWB7b810ZDDqmag2EbAYfiTY9gqq\",\"aliyunBucketName\":\"ycqb\"}', 0, '云存储配置信息');
 
-insert into `sys_dept`(`dept_id`,`parent_id`,`name`,`order_num`,`del_flag`) values
-(1,0,'集团总部',0,0),
-(2,1,'渠道',1,0);
+INSERT INTO `sys_dept` (`dept_id`, `parent_id`, `name`, `order_num`, `del_flag`)
+VALUES
+	(1, 0, '集团总部', 0, 0);
+
 
 insert into `sys_dict`(`id`,`name`,`type`,`code`,`value`,`order_num`,`remark`,`del_flag`) values
 (1,'性别','sex','0','女',0,null,0),
@@ -130,25 +132,133 @@ VALUES
 	(114, 110, '删除', NULL, 'sys:logloanvist:delete', 2, NULL, 0);
 
 
-insert into `sys_role`(`role_id`,`role_name`,`remark`,`dept_id`,`create_time`,`channel_id`) values
-(1,'渠道',null,2,now(),null);
-insert into `sys_role_menu`(`id`,`role_id`,`menu_id`) values
-(4,1,77),
-(5,1,79),
-(6,1,80),
-(7,1,81),
-(8,1,82),
-(9,1,83),
-(10,1,89),
-(11,1,90);
-insert into `sys_user`(`user_id`,`username`,`password`,`salt`,`email`,`mobile`,`status`,`dept_id`,`create_time`,`channel_id`,`loan_ids`) values
-(1,'admin','e1153123d7d180ceeb820d577ff119876678732a68eef4e6ffc0b1f06a01f91b','YzcmCZNvbXocrsz9dm8e','root@demo.com','18510065860',1,1,now(),null,null);
-insert into `sys_user_role`(`id`,`user_id`,`role_id`) values
-(3,2,1),
-(6,3,1),
-(7,4,1),
-(8,5,1),
-(9,6,1);
+INSERT INTO `sys_role` (`role_id`, `role_name`, `remark`, `dept_id`, `create_time`, `channel_id`)
+VALUES
+	(1, '管理员', NULL, 1, '2020-03-23 11:23:41', NULL);
+
+
+INSERT INTO `sys_role_dept` (`id`, `role_id`, `dept_id`)
+VALUES
+	(1, 1, 1);
+
+
+
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`)
+VALUES
+	(66, 1, 1),
+	(67, 1, 2),
+	(72, 1, 3),
+	(77, 1, 4),
+	(82, 1, 5),
+	(83, 1, 6),
+	(84, 1, 7),
+	(85, 1, 8),
+	(86, 1, 9),
+	(87, 1, 10),
+	(88, 1, 11),
+	(89, 1, 12),
+	(90, 1, 13),
+	(91, 1, 14),
+	(68, 1, 15),
+	(69, 1, 16),
+	(70, 1, 17),
+	(71, 1, 18),
+	(73, 1, 19),
+	(74, 1, 20),
+	(75, 1, 21),
+	(76, 1, 22),
+	(78, 1, 23),
+	(79, 1, 24),
+	(80, 1, 25),
+	(81, 1, 26),
+	(92, 1, 27),
+	(93, 1, 29),
+	(94, 1, 30),
+	(95, 1, 31),
+	(96, 1, 32),
+	(97, 1, 33),
+	(98, 1, 34),
+	(99, 1, 35),
+	(100, 1, 36),
+	(101, 1, 37),
+	(102, 1, 38),
+	(103, 1, 39),
+	(104, 1, 40),
+	(106, 1, 41),
+	(107, 1, 42),
+	(108, 1, 43),
+	(109, 1, 44),
+	(110, 1, 45),
+	(111, 1, 46),
+	(112, 1, 47),
+	(113, 1, 48),
+	(114, 1, 49),
+	(115, 1, 50),
+	(116, 1, 51),
+	(117, 1, 52),
+	(118, 1, 53),
+	(119, 1, 54),
+	(120, 1, 55),
+	(121, 1, 56),
+	(122, 1, 57),
+	(123, 1, 58),
+	(124, 1, 59),
+	(125, 1, 60),
+	(127, 1, 61),
+	(128, 1, 62),
+	(129, 1, 63),
+	(130, 1, 64),
+	(131, 1, 65),
+	(132, 1, 66),
+	(133, 1, 67),
+	(134, 1, 68),
+	(135, 1, 69),
+	(136, 1, 70),
+	(137, 1, 71),
+	(138, 1, 72),
+	(139, 1, 73),
+	(140, 1, 74),
+	(141, 1, 75),
+	(105, 1, 76),
+	(126, 1, 77),
+	(142, 1, 79),
+	(143, 1, 80),
+	(144, 1, 81),
+	(145, 1, 82),
+	(146, 1, 83),
+	(147, 1, 89),
+	(148, 1, 90),
+	(149, 1, 91),
+	(150, 1, 92),
+	(151, 1, 93),
+	(152, 1, 94),
+	(153, 1, 95),
+	(154, 1, 96),
+	(155, 1, 97),
+	(156, 1, 98),
+	(163, 1, 99),
+	(164, 1, 100),
+	(165, 1, 101),
+	(166, 1, 102),
+	(167, 1, 103),
+	(162, 1, 104),
+	(168, 1, 105),
+	(169, 1, 106),
+	(170, 1, 107),
+	(171, 1, 108),
+	(172, 1, 109),
+	(157, 1, 110),
+	(158, 1, 111),
+	(159, 1, 112),
+	(160, 1, 113),
+	(161, 1, 114);
+
+
+
+INSERT INTO `sys_user_role` (`id`, `user_id`, `role_id`)
+VALUES
+	(1, 1, 1);
+
 
 
 
