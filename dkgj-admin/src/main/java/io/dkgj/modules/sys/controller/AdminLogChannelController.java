@@ -95,15 +95,15 @@ public class AdminLogChannelController {
                 entity.setLoanUvNum(entity.getLoanUvNum());
             }
 
-            if (null != entity.getChannelRegNum() && entity.getLoanUvNum() != null) {
-                entity.setZcrjdjs(new BigDecimal(entity.getLoanUvNum() / (float) entity.getChannelRegNum()).setScale(2,BigDecimal.ROUND_UP));
+            if (null != entity.getChannelRegNum() && entity.getLoanUvNum() != null && entity.getChannelRegNum() > 0) {
+                entity.setZcrjdjs(new BigDecimal(entity.getLoanUvNum() / (float) entity.getChannelRegNum()).setScale(2, BigDecimal.ROUND_UP));
             }
 
             if (null != entity.getUvNum()
                     && entity.getUvNum() > 0
                     && null != entity.getChannelRegNum()
             ) {
-                entity.setUvzcl(new BigDecimal(entity.getChannelRegNum() / (float) entity.getUvNum() * 100).setScale(2,BigDecimal.ROUND_UP) + "%");
+                entity.setUvzcl(new BigDecimal(entity.getChannelRegNum() / (float) entity.getUvNum() * 100).setScale(2, BigDecimal.ROUND_UP) + "%");
             }
 
             data.add(entity);
@@ -153,6 +153,6 @@ public class AdminLogChannelController {
     }
 
     public static void main(String[] args) {
-     System.out.println(new BigDecimal(1 / (float) 3 * 100).setScale(2,BigDecimal.ROUND_UP));
+        System.out.println(new BigDecimal(1 / (float) 3 * 100).setScale(2, BigDecimal.ROUND_UP));
     }
 }
