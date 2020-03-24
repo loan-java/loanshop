@@ -80,8 +80,8 @@ public class AdminLogChannelController {
             if (status == 1) {
                 Integer baseNum = channelManageEntity.getDeductbase();
                 BigDecimal ratio = channelManageEntity.getDeductratio();
-                Integer regNum = tmpEntity.getUvNum() / 3;
-                //Integer regNum = tmpEntity.getChannelRegNum();
+                //Integer regNum = tmpEntity.getUvNum() / 3;
+                Integer regNum = tmpEntity.getChannelRegNum();
                 entity.setChannelRegNum(regNum == null ? 0 : regNum);
                 if (regNum != null && regNum > baseNum) {
                     entity.setRegnumTmp(new BigDecimal(regNum).subtract(new BigDecimal(baseNum)).multiply(new BigDecimal("1").subtract(ratio)).add(new BigDecimal(baseNum)).intValue());
@@ -90,10 +90,10 @@ public class AdminLogChannelController {
                 }
             } else {
                 entity.setClicknumTmp(entity.getClicknum());
-                entity.setChannelRegNum(tmpEntity.getUvNum() == null ? 0 : tmpEntity.getUvNum() / 3);
-                entity.setRegnumTmp(tmpEntity.getUvNum() == null ? 0 : tmpEntity.getUvNum() / 3);
-//                entity.setChannelRegNum(tmpEntity.getChannelRegNum() == null ? 0 : tmpEntity.getChannelRegNum());
-//                entity.setRegnumTmp(tmpEntity.getChannelRegNum() == null ? 0 : tmpEntity.getChannelRegNum());
+//                entity.setChannelRegNum(tmpEntity.getUvNum() == null ? 0 : tmpEntity.getUvNum() / 3);
+//                entity.setRegnumTmp(tmpEntity.getUvNum() == null ? 0 : tmpEntity.getUvNum() / 3);
+                entity.setChannelRegNum(tmpEntity.getChannelRegNum() == null ? 0 : tmpEntity.getChannelRegNum());
+                entity.setRegnumTmp(tmpEntity.getChannelRegNum() == null ? 0 : tmpEntity.getChannelRegNum());
                 entity.setUvNumTmp(entity.getUvNum());
                 entity.setLoanUvNum(entity.getLoanUvNum());
             }
