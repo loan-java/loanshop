@@ -12,7 +12,6 @@ package io.dkgj.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.dkgj.common.exception.RRException;
-import io.dkgj.common.utils.R;
 import io.dkgj.common.utils.RedisUtils;
 import io.dkgj.common.validator.Assert;
 import io.dkgj.config.RedisKeyConfig;
@@ -33,10 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service("userService")
 public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements UserService {
@@ -205,6 +201,12 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
         user.setLastLoginTime(new Date());
         user.setLastLoginOs(1);
         user.setUpdatedat(new Date());
+        if (Objects.isNull(user.getWxId())) {
+            ChannelManageEntity channelManageEntity = channelManageService.getOne(new QueryWrapper<ChannelManageEntity>().eq("channelCode", channel));
+            if (channelManageEntity != null) {
+                user.setWxId(channelManageEntity.getChannelcode());
+            }
+        }
         baseMapper.updateById(user);
         //获取登录token
         TokenEntity tokenEntity = tokenService.createToken(user.getId());
