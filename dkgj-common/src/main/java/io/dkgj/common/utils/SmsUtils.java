@@ -200,8 +200,43 @@ public class SmsUtils {
         return responseJSON;
     }
 
+    /**
+     * 讯必达 平台
+     * @param accesskey
+     * @param secret
+     * @param sign
+     * @param tplId
+     * @param mobile
+     * @param code
+     * @return
+     * @throws Exception
+     */
+    public static JSONObject sendXBDSms(String accesskey, String secret, String sign, String mobile, String code, String tplId) throws Exception {
+        String url = "http://api.xunbd.com/sms/single_send";// 应用地址
+        HttpClient httpClient = new HttpClient();
+        PostMethod postMethod = new PostMethod(url);
+        postMethod.getParams().setContentCharset("UTF-8");
+        postMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler());
+        postMethod.setParameter("accesskey", accesskey);
+        postMethod.setParameter("secret", secret);
+        postMethod.setParameter("sign", "【"+sign+"】");
+        postMethod.setParameter("phone", mobile);
+        postMethod.setParameter("tplId", tplId);
+        postMethod.setParameter("msg", code);
+        int statusCode = 0;
+        int whileNumber = 0;
+        //未成功，并且请求小于10次
+        while (statusCode != 200 && whileNumber < 10) {
+            statusCode = httpClient.executeMethod(postMethod);
+            ++whileNumber;
+        }
+        log.info("statusCode: " + statusCode + ", body: " + postMethod.getResponseBodyAsString() + "，循环了" + whileNumber + "次");
+        JSONObject responseJSON = JSONObject.parseObject(postMethod.getResponseBodyAsString());
+        return responseJSON;
+    }
+
 
     public static void main(String[] args) throws Exception {
-        SmsUtils.sendMOSms("httz001", "4dae6489da13cc5285058c9124346ef0", "易财钱包", "15868417851", "123123");
+        SmsUtils.sendXBDSms("pDZbSKpFFFdbnMjg", "rpRzZFQx6bt73lL7VO3ehMKfCLbG52Da", "易财钱包", "15260282340", "1234", "955");
     }
 }

@@ -51,12 +51,29 @@ spring:
 #      url: jdbc:mysql://rm-bp1jap4py371i9k320o.mysql.rds.aliyuncs.com:3306/loan56-dev?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
 #      username: loan56
 #      password: Qtz@2019
+
+#app:
+#  config:
+#    app: 1
+#    sign: 易财钱包
+#    accesskey: 631mySZo3d6wHz57
+#    accessSecret: GGhPMsXyIGRkhAiHSbc41lS0oIqXlkdq
+#    templateId: 0
+
+#MO短信
+#app:
+#  config:
+#    app: 1
+#    sign: 易财钱包
+#    accesskey: httz001
+#    accessSecret: 4dae6489da13cc5285058c9124346ef0
+#    templateId: 0
+
+#讯必达
 app:
   config:
     app: 1
     sign: 易财钱包
-    accesskey: 631mySZo3d6wHz57
-    accessSecret: GGhPMsXyIGRkhAiHSbc41lS0oIqXlkdq
-    moSign: 易财钱包
-    moUsername: httz001
-    moPwd: 4dae6489da13cc5285058c9124346ef0
+    accesskey: pDZbSKpFFFdbnMjg
+    accessSecret: rpRzZFQx6bt73lL7VO3ehMKfCLbG52Da
+    templateId: 955

@@ -12,4 +12,5 @@ public class AppProperties {
     private String sign;
     private String accesskey;
     private String accessSecret;
+    private String templateId;
 }
