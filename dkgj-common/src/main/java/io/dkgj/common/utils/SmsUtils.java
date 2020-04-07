@@ -135,37 +135,6 @@ public class SmsUtils {
         return responseJSON;
     }
 
-    /**
-     * 讯必达短信
-     *
-     * @param mobile
-     * @param code
-     * @return
-     * @throws Exception
-     */
-    public static JSONObject sendXunbdSms(String accesskey, String accessSecret, String chName, String mobile, String code) throws Exception {
-        HttpClient httpClient = new HttpClient();
-        PostMethod postMethod = new PostMethod("http://api.xunbd.com/sms/single_send");
-        postMethod.getParams().setContentCharset("UTF-8");
-        postMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler());
-
-
-        NameValuePair[] data = {
-                new NameValuePair("accesskey", accesskey),
-                new NameValuePair("secret", accessSecret),
-                new NameValuePair("sign", "【" + chName + "】"),
-                new NameValuePair("tplId", "670"),
-                new NameValuePair("phone", mobile),
-                new NameValuePair("msg", code)
-        };
-        postMethod.setRequestBody(data);
-
-        int statusCode = httpClient.executeMethod(postMethod);
-        System.out.println("statusCode: " + statusCode + ", body: "
-                + postMethod.getResponseBodyAsString());
-        JSONObject responseJSON = JSONObject.parseObject(postMethod.getResponseBodyAsString());
-        return responseJSON;
-    }
 
     /**
      * MO信通平台
@@ -202,6 +171,7 @@ public class SmsUtils {
 
     /**
      * 讯必达 平台
+     *
      * @param accesskey
      * @param secret
      * @param sign
@@ -211,7 +181,7 @@ public class SmsUtils {
      * @return
      * @throws Exception
      */
-    public static JSONObject sendXBDSms(String accesskey, String secret, String sign, String mobile, String code, String tplId) throws Exception {
+    public static JSONObject sendXBDSms(String accesskey, String secret, String sign, String mobile, String code) throws Exception {
         String url = "http://api.xunbd.com/sms/single_send";// 应用地址
         HttpClient httpClient = new HttpClient();
         PostMethod postMethod = new PostMethod(url);
@@ -219,9 +189,9 @@ public class SmsUtils {
         postMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler());
         postMethod.setParameter("accesskey", accesskey);
         postMethod.setParameter("secret", secret);
-        postMethod.setParameter("sign", "【"+sign+"】");
+        postMethod.setParameter("sign", "【" + sign + "】");
         postMethod.setParameter("phone", mobile);
-        postMethod.setParameter("tplId", tplId);
+        postMethod.setParameter("tplId", "955");
         postMethod.setParameter("msg", code);
         int statusCode = 0;
         int whileNumber = 0;
@@ -237,6 +207,6 @@ public class SmsUtils {
 
 
     public static void main(String[] args) throws Exception {
-        SmsUtils.sendXBDSms("pDZbSKpFFFdbnMjg", "rpRzZFQx6bt73lL7VO3ehMKfCLbG52Da", "易财钱包", "15260282340", "1234", "955");
+        SmsUtils.sendXBDSms("pDZbSKpFFFdbnMjg", "rpRzZFQx6bt73lL7VO3ehMKfCLbG52Da", "易财钱包", "15260282340", "1234");
     }
 }

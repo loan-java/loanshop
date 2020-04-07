@@ -136,7 +136,7 @@ public class ApiLoginController {
                 case 1:
                     while (json == null || !"0".equals(json.getString("code"))) {
                         try {
-                            json = SmsUtils.sendXBDSms(appProperties.getAccesskey(), appProperties.getAccessSecret(), appProperties.getSign(), mobile, String.valueOf(code), appProperties.getTemplateId());
+                            json = SmsUtils.sendXBDSms(appProperties.getAccesskey(), appProperties.getAccessSecret(), appProperties.getSign(), mobile, String.valueOf(code));
                             String key = String.format("%s%s", RedisKeyConfig.LOGIN_KEY, mobile);
                             //短信验证码第三方
                             redisUtils.set(key, code);
@@ -150,7 +150,7 @@ public class ApiLoginController {
                 default:
                     while (json == null || !"0".equals(json.getString("code"))) {
                         try {
-                            json = SmsUtils.sendXBDSms(appProperties.getAccesskey(), appProperties.getAccessSecret(), appProperties.getSign(), mobile, String.valueOf(code), appProperties.getTemplateId());
+                            json = SmsUtils.sendXBDSms(appProperties.getAccesskey(), appProperties.getAccessSecret(), appProperties.getSign(), mobile, String.valueOf(code));
                             String key = String.format("%s%s", RedisKeyConfig.LOGIN_KEY, mobile);
                             //短信验证码第三方
                             redisUtils.set(key, code);
