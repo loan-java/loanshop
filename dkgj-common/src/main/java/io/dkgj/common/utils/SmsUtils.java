@@ -175,7 +175,6 @@ public class SmsUtils {
      * @param accesskey
      * @param secret
      * @param sign
-     * @param tplId
      * @param mobile
      * @param code
      * @return
