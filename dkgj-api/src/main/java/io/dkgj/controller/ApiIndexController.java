@@ -45,10 +45,10 @@ public class ApiIndexController {
     public static Map<String, String> typeBasners = new HashMap<>();
 
     static {
-        typeBasners.put("1", "http://testloan56.oss-cn-beijing.aliyuncs.com/card%402x.png");
-        typeBasners.put("2", "http://testloan56.oss-cn-beijing.aliyuncs.com/high%402x.png");
-        typeBasners.put("3", "http://testloan56.oss-cn-beijing.aliyuncs.com/low%402x.png");
-        typeBasners.put("4", "http://testloan56.oss-cn-beijing.aliyuncs.com/fast%402x.png");
+        typeBasners.put("1", "https://ycqb.oss-cn-hangzhou.aliyuncs.com/index-pic/card.png");
+        typeBasners.put("2", "https://ycqb.oss-cn-hangzhou.aliyuncs.com/index-pic/high.png");
+        typeBasners.put("3", "https://ycqb.oss-cn-hangzhou.aliyuncs.com/index-pic/low.png");
+        typeBasners.put("4", "https://ycqb.oss-cn-hangzhou.aliyuncs.com/index-pic/fast.png");
     }
 
     @GetMapping("getChannelEnable")
