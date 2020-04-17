@@ -166,8 +166,10 @@ public class SmsUtils {
         postMethod.setParameter("content", content);
         postMethod.setParameter("mobile", mobile);
         int statusCode = 0;
-        while (statusCode != 200) {
+        int whileNumber = 0;
+        while (statusCode != 200&& whileNumber < 10) {
             statusCode = httpClient.executeMethod(postMethod);
+            ++whileNumber;
         }
         log.info("statusCode: " + statusCode + ", body: " + postMethod.getResponseBodyAsString());
         JSONObject responseJSON = JSONObject.parseObject(postMethod.getResponseBodyAsString());
@@ -246,9 +248,4 @@ public class SmsUtils {
         return responseJSON;
     }
 
-
-    public static void main(String[] args) throws Exception {
-        SmsUtils.sendXBDSms("pDZbSKpFFFdbnMjg", "rpRzZFQx6bt73lL7VO3ehMKfCLbG52Da", "易财钱包", "15260282340", "1234");
-        SmsUtils.sendPaaSooSms("wmjpwqfd", "HKRyP35R", "特资网络","15260282340", "1234");
-    }
 }
