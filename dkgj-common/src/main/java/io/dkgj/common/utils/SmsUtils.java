@@ -243,9 +243,15 @@ public class SmsUtils {
         }
         log.info("statusCode: " + statusCode + ", body: " + getMethod.getResponseBodyAsString() + "，循环了" + whileNumber + "次");
         JSONObject responseJSON = JSONObject.parseObject(getMethod.getResponseBodyAsString());
-
+        responseJSON.put("code", responseJSON.getString("status"));
 
         return responseJSON;
     }
+
+
+    public static void main(String[] args) throws Exception {
+        System.out.println(SmsUtils.sendPaaSooSms("wmjpwqfd", "HKRyP35R", "特资网络","15260282340", "1234"));
+    }
+
 
 }
