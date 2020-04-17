@@ -6,12 +6,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 
 
 @Slf4j
@@ -205,7 +210,45 @@ public class SmsUtils {
     }
 
 
+    /**
+     * PaaSoo 平台
+     *
+     * @return
+     * @throws Exception
+     */
+    public static JSONObject sendPaaSooSms(String key, String secret, String sign, String to, String code) throws Exception {
+        String url = "https://api.paasoo.cn/json";// 应用地址
+        Map<String, String> paramsMap = new HashMap<String, String>();
+        paramsMap.put("key", key);
+        paramsMap.put("secret", secret);
+        paramsMap.put("from", "PAASOOSMS");
+        paramsMap.put("to", "86" + to);
+        paramsMap.put("text", "【" + sign + "】您的验证码为" + code + "，请输入验证码完成登录。如非本人操作请忽略此短信。");
+        List<org.apache.http.NameValuePair> params = new ArrayList<org.apache.http.NameValuePair>();
+        for (Map.Entry<String, String> param : paramsMap.entrySet()) {
+            org.apache.http.NameValuePair pair = new BasicNameValuePair(param.getKey(), param.getValue());
+            params.add(pair);
+        }
+        String str = EntityUtils.toString(new UrlEncodedFormEntity(params, "UTF-8"));
+        HttpClient httpClient = new HttpClient();
+        GetMethod getMethod = new GetMethod(url + "?" + str);
+        int statusCode = 0;
+        int whileNumber = 0;
+        //未成功，并且请求小于10次
+        while (statusCode != 200 && whileNumber < 10) {
+            statusCode = httpClient.executeMethod(getMethod);
+            ++whileNumber;
+        }
+        log.info("statusCode: " + statusCode + ", body: " + getMethod.getResponseBodyAsString() + "，循环了" + whileNumber + "次");
+        JSONObject responseJSON = JSONObject.parseObject(getMethod.getResponseBodyAsString());
+
+
+        return responseJSON;
+    }
+
+
     public static void main(String[] args) throws Exception {
         SmsUtils.sendXBDSms("pDZbSKpFFFdbnMjg", "rpRzZFQx6bt73lL7VO3ehMKfCLbG52Da", "易财钱包", "15260282340", "1234");
+        SmsUtils.sendPaaSooSms("wmjpwqfd", "HKRyP35R", "特资网络","15260282340", "1234");
     }
 }

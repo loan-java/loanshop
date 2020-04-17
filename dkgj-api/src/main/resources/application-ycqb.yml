@@ -58,7 +58,6 @@ spring:
 #    sign: 易财钱包
 #    accesskey: httz001
 #    accessSecret: 4dae6489da13cc5285058c9124346ef0
-#    templateId: 0
 
 #MO短信
 #app:
@@ -67,12 +66,20 @@ spring:
 #    sign: 易财钱包
 #    accesskey: httz001
 #    accessSecret: 4dae6489da13cc5285058c9124346ef0
-#    templateId: 0
+
+#讯必达
+#app:
+#  config:
+#    app: 1
+#    sign: 易财钱包
+#    accesskey: pDZbSKpFFFdbnMjg
+#    accessSecret: rpRzZFQx6bt73lL7VO3ehMKfCLbG52Da
+
 
 #讯必达
 app:
   config:
     app: 1
-    sign: 易财钱包
-    accesskey: pDZbSKpFFFdbnMjg
-    accessSecret: rpRzZFQx6bt73lL7VO3ehMKfCLbG52Da
+    sign: 特资网络
+    accesskey: wmjpwqfd
+    accessSecret: HKRyP35R
