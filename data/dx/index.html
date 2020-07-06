@@ -219,10 +219,10 @@
     }
     jQuery('#qrcode').qrcode({
         render: "canvas", //也可以替换为table
-        text:"http://35.241.105.201/?channelCode="+channelCode
+        text:"http://download.jbhunt.cc/?channelCode="+channelCode
     });
 
-    $('.link').html('http://35.241.105.201/?channelCode='+channelCode);
+    $('.link').html('http://download.jbhunt.cc/?channelCode='+channelCode);
 
     if (isIos) {
         browser.innerHTML = 'safari';
@@ -238,7 +238,7 @@
         //window.open(downloadLink);
         var data = {"channel":channelCode};
         $.ajax({
-                url : "http://35.241.105.201:8081/ycqb-api/api/traceChannelDownNum",
+                url : "http://api.jbhunt.cc/ycqb-api/api/traceChannelDownNum",
                 async : false,
                 type : "POST",
                 contentType : 'application/json',
@@ -256,7 +256,7 @@
     copy.addEventListener('click', function () {
         const input = document.createElement('input');
         document.body.appendChild(input);
-        input.setAttribute('value', 'http://35.241.105.201/?channelCode='+channelCode);
+        input.setAttribute('value', 'http://download.jbhunt.cc/?channelCode='+channelCode);
         input.select();
         if (document.execCommand('copy')) {
             document.execCommand('copy');
