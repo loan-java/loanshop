@@ -11,7 +11,7 @@ spring:
       enabled: true
   redis:
     database: 0
-    host: 47.114.163.8
+    host: 35.241.105.201
     port: 6379
     password: 4f12o*AKQu
     timeout: 6000ms  # 连接超时时长（毫秒）
