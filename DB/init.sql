@@ -254,6 +254,9 @@ VALUES
 	(161, 1, 114);
 
 
+insert into `sys_user`(`user_id`,`username`,`password`,`salt`,`email`,`mobile`,`status`,`dept_id`,`create_time`,`channel_id`,`loan_ids`) values
+(1,'admin','e1153123d7d180ceeb820d577ff119876678732a68eef4e6ffc0b1f06a01f91b','YzcmCZNvbXocrsz9dm8e','root@demo.com','15868417851',1,1,now(),null,null);
+
 
 INSERT INTO `sys_user_role` (`id`, `user_id`, `role_id`)
 VALUES

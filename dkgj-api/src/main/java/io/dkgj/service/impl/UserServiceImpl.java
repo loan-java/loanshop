@@ -199,7 +199,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
         Assert.isNull(user, "手机号或密码错误");
         user.setLastLoginIp(ip);
         user.setLastLoginTime(new Date());
-        user.setLastLoginOs(1);
+        user.setLastLoginOs(2);
         user.setUpdatedat(new Date());
         if (Objects.isNull(user.getWxId())) {
             ChannelManageEntity channelManageEntity = channelManageService.getOne(new QueryWrapper<ChannelManageEntity>().eq("channelCode", channel));
